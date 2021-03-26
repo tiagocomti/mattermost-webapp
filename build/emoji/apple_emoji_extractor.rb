@@ -4,10 +4,13 @@ require 'fileutils'
 # Code in this class largely taken from https://github.com/github/gemoji
 module Mattermost
   class AppleEmojiExtractor
-    attr_reader :size
+    EMOJI_TTF = "/System/Library/Fonts/Apple Color Emoji.ttc"
 
-    def initialize(size)
+    attr_reader :size, :images_path
+
+    def initialize(size, images_path)
       @size = size
+      @images_path = images_path
     end
 
     def png(emoji)
@@ -20,15 +23,15 @@ module Mattermost
           next unless glyph_name =~ /\.[1-5]($|\.)/
         end
         matches = glyph_name_to_emoji(glyph_name)
-        next unless matches && (matches.include?(emoji) || matches.include?(emoji + "\u{fe0f 200d 2640}"))
+        if !matches
+          puts "missing #{glyph_name}"
+          next
+        end
+        # next unless matches && (matches.include?(emoji) || matches.include?(emoji + "\u{fe0f 200d 2640}"))
         return binread.call
       end
       nil
     end
-
-    private
-
-    EMOJI_TTF = '/System/Library/Fonts/Apple Color Emoji.ttc'.freeze
 
     def each(&block)
       return to_enum(__method__) unless block_given?
@@ -44,50 +47,22 @@ module Mattermost
       end
     end
 
-    def glyph_name_to_emoji(glyph_name)
-      zwj = Emoji::ZERO_WIDTH_JOINER
-      v16 = Emoji::VARIATION_SELECTOR_16
-
-      if glyph_name =~ /^u(#{FAMILY}|#{COUPLE}|#{KISS})\.([#{FAMILY_MAP.keys.join('')}]+)$/
-        if $1 == FAMILY ? $2 == "MWB" : $2 == "WM"
-          raw = [$1.hex].pack('U')
-        else
-          if $1 == COUPLE
-            middle = "#{zwj}\u{2764}#{v16}#{zwj}" # heavy black heart
-          elsif $1 == KISS
-            middle = "#{zwj}\u{2764}#{v16}#{zwj}\u{1F48B}#{zwj}" # heart + kiss mark
-          else
-            middle = zwj
-          end
-          raw = $2.split('').map { |c| FAMILY_MAP.fetch(c) }.join(middle)
+    def extract!
+      each do |glyph_name, type, binread|
+        if emoji = glyph_name_to_emoji(glyph_name)
+          image_filename = "#{images_path}/#{emoji.image_filename}"
+          FileUtils.mkdir_p(File.dirname(image_filename))
+          File.open(image_filename, 'wb') { |f| f.write binread.call }
         end
-        candidates = [raw]
-      else
-        raw = glyph_name.gsub(/(^|_)u([0-9A-F]+)/) { ($1.empty?? $1 : zwj) + [$2.hex].pack('U') }
-        raw.sub!(/\.0\b/, '')
-        raw.sub!(/\.(#{SKIN_TONE_MAP.keys.join('|')})/) { SKIN_TONE_MAP.fetch($1) }
-        raw.sub!(/\.(#{GENDER_MAP.keys.join('|')})$/) { v16 + zwj + GENDER_MAP.fetch($1) }
-        candidates = [raw]
-        candidates << raw.sub(v16, '') if raw.include?(v16)
-        candidates << raw.gsub(zwj, '') if raw.include?(zwj)
-        candidates.dup.each { |c| candidates << (c + v16) }
       end
-
-      candidates
     end
+
+  private
 
     GENDER_MAP = {
       "M" => "\u{2642}",
       "W" => "\u{2640}",
     }
-
-    SKIN_TONE_MAP = {
-      "1" => "\u{1F3FB}",
-      "2" => "\u{1F3FC}",
-      "3" => "\u{1F3FD}",
-      "4" => "\u{1F3FE}",
-      "5" => "\u{1F3FF}",
-    }.freeze
 
     FAMILY_MAP = {
       "B" => "\u{1f466}",
@@ -99,6 +74,41 @@ module Mattermost
     FAMILY = "1F46A"
     COUPLE = "1F491"
     KISS = "1F48F"
+    HANDSHAKE = "1F91D"
+
+    def glyph_name_to_emoji(glyph_name)
+      return if glyph_name =~ /\.[1-5]($|\.)/
+      zwj = "\u{200d}" # Emoji::ZERO_WIDTH_JOINER
+      v16 = "\u{fe0f}" # Emoji::VARIATION_SELECTOR_16
+
+      if glyph_name =~ /^u(#{FAMILY}|#{COUPLE}|#{KISS}|#{HANDSHAKE})\.([#{FAMILY_MAP.keys.join('')}]+)$/
+        if $1 == FAMILY ? $2 == "MWB" : $2 == "WM"
+          raw = [$1.hex].pack('U')
+        else
+          if $1 == COUPLE
+            middle = "#{zwj}\u{2764}#{v16}#{zwj}" # heavy black heart
+          elsif $1 == KISS
+            middle = "#{zwj}\u{2764}#{v16}#{zwj}\u{1F48B}#{zwj}" # heart + kiss mark
+          elsif $1 == HANDSHAKE
+            middle = "#{zwj}\u{1F91D}#{v16}#{zwj}"
+          else
+            middle = zwj
+          end
+          raw = $2.split('').map { |c| FAMILY_MAP.fetch(c) }.join(middle)
+        end
+        candidates = [raw]
+      else
+        raw = glyph_name.gsub(/(^|_)u([0-9A-F]+)/) { ($1.empty?? $1 : zwj) + [$2.hex].pack('U') }
+        raw.sub!(/\.0\b/, '')
+        raw.sub!(/\.(#{GENDER_MAP.keys.join('|')})$/) { v16 + zwj + GENDER_MAP.fetch($1) }
+        candidates = [raw]
+        candidates << raw.sub(v16, '') if raw.include?(v16)
+        candidates << raw.gsub(zwj, '') if raw.include?(zwj)
+        candidates.dup.each { |c| candidates << (c + v16) }
+      end
+
+      candidates.map { |c| Emoji.find_by_unicode(c) }.compact.first
+    end
 
     # https://www.microsoft.com/typography/otspec/otff.htm
     def parse_ttc(io)
@@ -154,6 +164,8 @@ module Mattermost
         glyph_names << io.read(length)
       end
 
+      puts "has #{num_glyphs} glyphs"
+
       GlyphIndex.new(num_glyphs, glyph_name_index, glyph_names)
     end
 
@@ -186,11 +198,11 @@ module Mattermost
 
         data_offsets = io.read(4 * (num_glyphs+1)).unpack('N*')
         return {
-                 ppem: ppem,
-                 resolution: resolution,
-                 offset: strike_offset,
-                 glyph_data_offset: data_offsets,
-               }
+          ppem: ppem,
+          resolution: resolution,
+          offset: strike_offset,
+          glyph_data_offset: data_offsets,
+        }
       end
       return nil
     end

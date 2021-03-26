@@ -5,7 +5,7 @@ require 'fileutils'
 require 'json'
 require 'open-uri'
 require 'sprite_factory'
-require 'emoji/extractor'
+# require 'emoji/extractor'
 require_relative './apple_emoji_extractor.rb'
 require_relative './unicode_emoji_helper.rb'
 
@@ -35,15 +35,27 @@ end
 
 ### Extract and create all of the emoji skin tones ###
 unicode_emoji_helper = Mattermost::UnicodeEmojiHelper.new
-apple_extractor = Mattermost::AppleEmojiExtractor.new(64)
+apple_extractor = Mattermost::AppleEmojiExtractor.new(64, emoji_path)
 emoji_added = []
 
 Emoji.all.clone.each do |emoji|
   next unless emoji.raw
 
+  if emoji.unicode_version == '13.0' || emoji.unicode_version == '13.1'
+    # We don't support Emoji 13 until I upgrade to Big Sur :p
+    puts "skipping #{emoji.raw} because it's not supported"
+    next
+  end
+
+
   sequences = unicode_emoji_helper.emoji_modifier_sequences(emoji.raw.split(''))
-  next unless sequences
+  if !sequences
+    puts "skipping #{emoji.raw} because no sequences"
+    next
+  end
+#   next unless sequences
   sequences.each do |sequence|
+    puts "hmm #{sequence}"
     pngbytes = apple_extractor.png(sequence)
     print 'x' if pngbytes.nil?
     next unless pngbytes
@@ -70,7 +82,7 @@ end
 puts "\nThe following #{emoji_added.length} emoji were added:"
 print emoji_added
 
-blocklist = ['basecamp', 'basecampy']
+blocklist = []
 
 categories = []
 
@@ -87,6 +99,12 @@ Emoji.all.each do |emoji|
     if blocklist.include? emoji.name
         next
     end
+
+    if emoji.unicode_version == '13.0' || emoji.unicode_version == '13.1'
+        # We don't support Emoji 13 until I upgrade to Big Sur :p
+        next
+    end
+
     count += 1
     i += 1
     emoji.aliases.each do |emoji_alias|
@@ -172,14 +190,13 @@ if ENV.key?('SERVER_DIR')
   FileUtils.mv(File.join(project_root, 'emoji_data.go'), server_dir)
 end
 
-Emoji::Extractor.new(64, emoji_path).extract!
+apple_extractor.extract!
 
-Dir["#{Emoji.images_path}/*.png"].each do |png|
-    if blocklist.include? File.basename(png, '.png')
-        next
-    end
-    FileUtils.cp(png, File.join(emoji_path, File.basename(png)))
-end
+# Dir["#{emoji_path}/*.png"].each do |png|
+#     if blocklist.include? File.basename(png, '.png')
+#         FileUtils.rm(png)
+#     end
+# end
 
 puts "images written to images/emoji"
 
@@ -235,6 +252,11 @@ categories.each do |category|
     Dir.mkdir tmp_directory
     Emoji.all.each do |emoji|
         i += 1
+        if emoji.unicode_version == '13.0' || emoji.unicode_version == '13.1'
+            # We don't support Emoji 13 until I upgrade to Big Sur :p
+            next
+        end
+
         if blocklist.include? emoji.name
             next
         end
@@ -273,9 +295,9 @@ categories.each do |category|
 
         end
     end
-    
+
     FileUtils.remove_dir tmp_directory
-    
+
 end
 
 File.write(File.join(project_root, 'sass', 'components', '_emojisprite.scss'), css_rules.join("\n"))
