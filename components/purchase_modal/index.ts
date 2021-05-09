@@ -45,7 +45,7 @@ function mapStateToProps(state: GlobalState) {
             description: "",
             id: "prod_Hm2oYaBiRSISL3",
             name: "Cloud Enterprise",
-            price_per_seat: 10
+            price_per_seat: 12
         }
     ];
     return {
