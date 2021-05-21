@@ -32,7 +32,6 @@ function mapStateToProps(state) {
 
     const userId = currentUser.id;
 
-    console.log(getMySystemRoles(state));
     return {
         userId,
         profilePicture: Client4.getProfilePictureUrl(userId, currentUser.last_picture_update),

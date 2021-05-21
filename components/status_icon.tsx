@@ -43,7 +43,7 @@ export default class StatusIcon extends React.PureComponent<Props> {
         }
 
         let IconComponent: React.ComponentType<{className?: string}> | string;
-        const iconComponentProps = {className};
+        const iconComponentProps = {className, roles_agf: status};
         if (type === 'avatar') {
             if (status === 'online') {
                 IconComponent = StatusOnlineAvatarIcon;

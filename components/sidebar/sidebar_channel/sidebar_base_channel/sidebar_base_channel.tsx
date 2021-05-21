@@ -64,7 +64,15 @@ export default class SidebarBaseChannel extends React.PureComponent<Props, State
             return (
                 <i className='icon icon-globe'/>
             );
-        } else if (channel.type === Constants.PRIVATE_CHANNEL) {
+        } else if(channel.display_name === "Radar"){
+            return (
+                <div className='suggestion-list__icon suggestion-list__icon--large'>
+                    <span alt=':crocodile:' className='emoticon' title=':crocodile:'
+                          style={{backgroundImage: 'url(http://18.225.37.143:8065/static/emoji/1f40a.png)',marginRight: '9px'}} >:crocodile:</span>
+                </div>
+            );
+        }
+        else if (channel.type === Constants.PRIVATE_CHANNEL) {
             return (
                 <i className='icon icon-lock-outline'/>
             );

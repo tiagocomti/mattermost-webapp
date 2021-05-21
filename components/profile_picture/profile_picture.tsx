@@ -13,6 +13,7 @@ import './profile_picture.scss';
 import {Permissions} from "mattermost-redux/constants";
 import SystemPermissionGate from "../permissions_gates/system_permission_gate";
 import {getMySystemRoles} from "mattermost-redux/selectors/entities/roles_helpers";
+import SimpleTooltip from "../widgets/simple_tooltip";
 
 interface MMOverlayTrigger extends BaseOverlayTrigger {
     hide: () => void;
@@ -87,7 +88,7 @@ export default class ProfilePicture extends React.PureComponent<Props> {
                     }
                 >
                     <button
-                        className={`status-wrapper style--none zindex-agf ${this.props.wrapperClass}`}
+                        className={`status-wrapper style--none tooltip-agf zindex-agf tooltip-agf ${this.props.wrapperClass}`}
                         tabIndex={-1}
                     >
 
@@ -106,6 +107,7 @@ export default class ProfilePicture extends React.PureComponent<Props> {
                             />
                         </span>
                         <StatusIcon status={this.props.roles}/>
+
                     </button>
                 </OverlayTrigger>
             );

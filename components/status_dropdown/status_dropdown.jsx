@@ -8,7 +8,7 @@ import {FormattedMessage} from 'react-intl';
 import {Tooltip} from 'react-bootstrap';
 
 import Constants, {UserStatuses, ModalIdentifiers} from 'utils/constants';
-import {localizeMessage} from 'utils/utils.jsx';
+import {imageURLForUser, localizeMessage} from 'utils/utils.jsx';
 import ResetStatusModal from 'components/reset_status_modal';
 import StatusIcon from 'components/status_icon';
 import Avatar from 'components/widgets/users/avatar';
@@ -30,6 +30,7 @@ import './status_dropdown.scss';
 import {toUTCUnix} from 'utils/datetime';
 import {Permissions} from "mattermost-redux/constants";
 import SystemPermissionGate from "../permissions_gates/system_permission_gate";
+import SimpleTooltip from "../widgets/simple_tooltip";
 
 export default class StatusDropdown extends React.PureComponent {
     static propTypes = {
@@ -312,7 +313,7 @@ export default class StatusDropdown extends React.PureComponent {
                 className={'status-dropdown-menu'}
                 ref={this.refCallback}
             >
-                <div className='status-wrapper status-selector-agf zindex-agf'>
+                <div className='status-wrapper status-selector-agf zindex-agf tooltip-agf'>
                     <SystemPermissionGate permissions={[Permissions.USER_FRAME_GOLD]}>
                         <div class='moldura-gold'></div>
                     </SystemPermissionGate>
