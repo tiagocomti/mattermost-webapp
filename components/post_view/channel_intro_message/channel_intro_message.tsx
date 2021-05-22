@@ -42,6 +42,7 @@ type Props = {
     teammateName?: string;
     stats: any;
     theme: any;
+    roles?: string;
     usersLimit: number;
     actions: {
         getTotalUsersStats: () => any;
@@ -103,6 +104,8 @@ function createGMIntroMessage(channel: Channel, centeredIntro: string, profiles:
                     key={'introprofilepicture' + profile.id}
                     src={Utils.imageURLForUser(profile.id, profile.last_picture_update)}
                     size='xl'
+                    status={profile.roles}
+                    roles={profile.roles}
                     userId={profile.id}
                     username={profile.username}
                 />

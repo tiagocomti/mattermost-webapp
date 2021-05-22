@@ -317,6 +317,11 @@ export default class StatusDropdown extends React.PureComponent {
                     <SystemPermissionGate permissions={[Permissions.USER_FRAME_GOLD]}>
                         <div class='moldura-gold'></div>
                     </SystemPermissionGate>
+
+                    <SystemPermissionGate permissions={[Permissions.USER_FRAME_BRONZE]}>
+                        <div class='moldura-bronze'></div>
+                    </SystemPermissionGate>
+
                     {profilePicture}
                     <StatusIcon status={this.props.roles}/>
                 </div>

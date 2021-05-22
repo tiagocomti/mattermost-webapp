@@ -95,8 +95,8 @@ export default class ProfilePicture extends React.PureComponent<Props> {
                         {this.props.roles != undefined && this.props.roles.includes(Permissions.USER_FRAME_GOLD) == true &&
                             <div class='moldura-gold'></div>
                         }
-                        {this.props.roles != undefined && this.props.roles.includes(Permissions.USER_FRAME_SILVER) == true &&
-                        <div class='moldura-silver'></div>
+                        {this.props.roles != undefined && this.props.roles.includes(Permissions.USER_FRAME_BRONZE) == true &&
+                            <div class='moldura-bronze'></div>
                         }
 
                         <span className={profileIconClass}>
@@ -123,9 +123,10 @@ export default class ProfilePicture extends React.PureComponent<Props> {
                 {this.props.newStatusIcon ? (
                     <StatusIconNew
                         className={this.props.statusClass}
-                        status={this.props.status}
+                        status={this.props.roles}
+                        roles={this.props.roles}
                     />
-                ) : <StatusIcon status={this.props.status}/>}
+                ) : <StatusIcon status={this.props.roles} roles={this.props.roles} />}
             </span>
         );
     }

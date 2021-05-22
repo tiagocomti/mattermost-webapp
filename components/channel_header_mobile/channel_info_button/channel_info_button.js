@@ -128,24 +128,7 @@ export default class NavbarInfoButton extends React.PureComponent {
         );
 
         return (
-            <OverlayTrigger
-                ref={this.headerOverlayRef}
-                trigger='click'
-                placement='bottom'
-                overlay={popover}
-                className='description'
-                rootClose={true}
-            >
-                <button
-                    className='navbar-toggle navbar-right__icon navbar-info-button pull-right'
-                    aria-label={Utils.localizeMessage('accessibility.button.Info', 'Info')}
-                >
-                    <InfoIcon
-                        className='icon icon__info'
-                        aria-hidden='true'
-                    />
-                </button>
-            </OverlayTrigger>
+            <div></div>
         );
     }
 }

@@ -27,6 +27,7 @@ type Props = {
     active: boolean;
     botIconUrl: string | null;
     isCollapsed: boolean;
+    roles?: string;
     actions: {
         savePreferences: (userId: string, preferences: PreferenceType[]) => Promise<{data: boolean}>;
         leaveDirectChannel: (channelId: string) => Promise<{data: boolean}>;

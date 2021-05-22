@@ -45,7 +45,11 @@ export default class StatusIcon extends React.PureComponent<Props> {
         let IconComponent: React.ComponentType<{className?: string}> | string;
         const iconComponentProps = {className, roles_agf: status};
         if (type === 'avatar') {
-            if (status === 'online') {
+            if(status.includes(Permissions.USER_STATUS_MODERATOR) ||
+                status.includes(Permissions.USER_STATUS_FOUNDER) ||
+                status.includes(Permissions.USER_STATUS_MENTOR)){
+                IconComponent = AgfStatusIcon;
+            }else if (status === 'online') {
                 IconComponent = StatusOnlineAvatarIcon;
             } else if (status === 'away') {
                 IconComponent = StatusAwayAvatarIcon;
@@ -55,7 +59,9 @@ export default class StatusIcon extends React.PureComponent<Props> {
                 return null;
                 IconComponent = StatusOfflineAvatarIcon;
             }
-        }else if(status.includes(Permissions.USER_STATUS_MODERATOR)){
+        }else if(status.includes(Permissions.USER_STATUS_MODERATOR) ||
+            status.includes(Permissions.USER_STATUS_FOUNDER) ||
+            status.includes(Permissions.USER_STATUS_MENTOR)){
             IconComponent = AgfStatusIcon;
         }
         else if (status === 'online') {

@@ -18,7 +18,7 @@ type Props = {
 }
 function mapStateToProps(state: GlobalState, ownProps: Props) {
     for (const permission of ownProps.permissions) {
-        if(permission == "user_gold"){
+        if(permission == "user_gold" || permission == "user_bronze" ){
             let myPermissions = getMySystemRoles(state);
             if(myPermissions.has(permission))
             {

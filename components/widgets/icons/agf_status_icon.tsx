@@ -10,15 +10,39 @@ export default function AgfStatusIcon(props: React.HTMLAttributes<HTMLSpanElemen
     const {formatMessage} = useIntl();
     if(props.roles_agf.includes(Permissions.USER_FRAME_GOLD)){
         texto_status += "Gold";
+    }else if(props.roles_agf.includes(Permissions.USER_FRAME_BRONZE)){
+        texto_status += "Bronze";
     }
     if(props.roles_agf.includes(Permissions.USER_STATUS_MODERATOR)){
-        texto_status += " e moderador";
+        texto_status += " e Moderador";
+    }else if(props.roles_agf.includes(Permissions.USER_STATUS_MENTOR)){
+        texto_status += " e Mentor";
+    }else if(props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER)){
+        texto_status += " e Fundador";
     }
 
-    return (
-        <span {...props} class={'status'}>
-            <img src={'https://tc.tradersclub.com.br/static/files/8fbe9849d48fe32bfa4f5c03df0455b5.svg'} style={{height: "15px"}} />
-            <span class="tooltip-agf-text">{texto_status}</span>
-        </span>
-    );
+
+    if(props.roles_agf.includes(Permissions.USER_STATUS_MODERATOR)){
+        return (
+            <span {...props} class={'status'}>
+                <img src={'/static/badges/moderador_icone.svg'} style={{height: "16px"}} />
+                <span class="tooltip-agf-text">{texto_status}</span>
+            </span>
+        );
+    }else if(props.roles_agf.includes(Permissions.USER_STATUS_MENTOR)){
+        return (
+            <span {...props} class={'status'}>
+                <img src={'/static/badges/mentor_icone.svg'} style={{height: "16px"}} />
+                <span class="tooltip-agf-text">{texto_status}</span>
+            </span>
+        );
+    }else if(props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER)){
+        return (
+            <span {...props} class={'status'}>
+                <img src={'/static/badges/fundador_icone.svg'} style={{height: "15px"}} />
+                <span class="tooltip-agf-text">{texto_status}</span>
+            </span>
+        );
+    }
+
 }

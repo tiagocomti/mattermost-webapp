@@ -137,7 +137,6 @@ export default class ChannelHeaderMobile extends React.PureComponent {
                                 isDropdown={false}
                             />
                         )}
-                        <CollapseRhsButton/>
                     </div>
                 </div>
             </nav>
