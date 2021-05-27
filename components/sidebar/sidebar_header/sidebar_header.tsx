@@ -37,7 +37,7 @@ export default class SidebarHeader extends React.PureComponent<any, State> {
         const ariaLabel = Utils.localizeMessage('accessibility.sections.lhsHeader', 'team menu region');
 
         return (
-            <div
+	<div
                 id='lhsHeader'
                 aria-label={ariaLabel}
                 tabIndex={-1}

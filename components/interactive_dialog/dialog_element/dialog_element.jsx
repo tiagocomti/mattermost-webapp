@@ -100,26 +100,6 @@ export default class DialogElement extends React.PureComponent {
         let {type, maxLength} = this.props;
 
         let displayNameContent = displayName;
-        if (optional) {
-            displayNameContent = (
-                <React.Fragment>
-                    {displayName + ' '}
-                    <span className='font-weight--normal light'>
-                        <FormattedMessage
-                            id='interactive_dialog.element.optional'
-                            defaultMessage='(optional)'
-                        />
-                    </span>
-                </React.Fragment>
-            );
-        } else {
-            displayNameContent = (
-                <React.Fragment>
-                    {displayName}
-                    <span className='error-text'>{' *'}</span>
-                </React.Fragment>
-            );
-        }
 
         let helpTextContent = helpText;
         if (errorText) {

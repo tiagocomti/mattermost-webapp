@@ -11,6 +11,8 @@ type Props = {
     children: React.ReactNode;
     helpText?: React.ReactNode;
     footer?: React.ReactNode;
+    resize?: false;
+    type?: "";
 }
 
 const Setting: React.FC<Props> = ({
@@ -21,31 +23,93 @@ const Setting: React.FC<Props> = ({
     children,
     footer,
     helpText,
+    resize,
+    type,
 }: Props) => {
-    return (
-        <div
-            data-testid={inputId}
-            className='form-group'
-        >
-            <label
-                data-testid={inputId + 'label'}
-                className={'control-label ' + labelClassName}
-                htmlFor={inputId}
+     if(type === "textarea"){
+        return (
+            <div
+                data-testid={inputId}
+                className='form-group'
+                style={{marginTop: "50px"}}
             >
-                {label}
-            </label>
-            <div className={inputClassName}>
-                {children}
-                <div
-                    data-testid={inputId + 'help-text'}
-                    className='help-text'
+                <label
+                    data-testid={inputId + 'label'}
+                    className={'control-label ' + labelClassName}
+                    htmlFor={inputId}
                 >
-                    {helpText}
+                    {label}
+                </label>
+                <div className={inputClassName}>
+                    {children}
+                    <div
+                        data-testid={inputId + 'help-text'}
+                        className='help-text'
+                    >
+                        {helpText}
+                    </div>
+                    {footer}
                 </div>
-                {footer}
             </div>
-        </div>
-    );
+        );
+    }
+    else if(resize == false || resize == undefined || resize == "") {
+        return (
+            <div
+                data-testid={inputId}
+                className='form-group'
+            >
+                <label
+                    data-testid={inputId + 'label'}
+                    className={'control-label ' + labelClassName}
+                    htmlFor={inputId}
+                >
+                    {label}
+                </label>
+                <div className={inputClassName}>
+                    {children}
+                    <div
+                        data-testid={inputId + 'help-text'}
+                        className='help-text'
+                    >
+                        {helpText}
+                    </div>
+                    {footer}
+                </div>
+            </div>
+        );
+    }
+    else{
+         let style = {height: "19px"};
+        if(inputId == "troca"){
+            style = {height: "25px"}
+        }
+        return (
+            <div
+                data-testid={inputId}
+                className='form-group'
+                style={style}
+            >
+                <label
+                    data-testid={inputId + 'label'}
+                    className={'control-label ' + labelClassName}
+                    htmlFor={inputId}
+                >
+                    {label}
+                </label>
+                <div className={inputClassName}>
+                    {children}
+                    <div
+                        data-testid={inputId + 'help-text'}
+                        className='help-text'
+                    >
+                        {helpText}
+                    </div>
+                    {footer}
+                </div>
+            </div>
+        );
+    }
 };
 
 export default Setting;

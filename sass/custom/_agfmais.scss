@@ -60,4 +60,10 @@
     }
 }
 
+@media screen and (max-width: 640px) {
+    .modal-body {
+        max-height: 50% !important;
+    }
+}
+
 

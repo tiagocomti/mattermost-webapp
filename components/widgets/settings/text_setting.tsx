@@ -91,7 +91,6 @@ export default class TextSetting extends React.PureComponent<WidgetTextSettingPr
                 />
             );
         }
-
         return (
             <Setting
                 label={this.props.label}
@@ -100,6 +99,7 @@ export default class TextSetting extends React.PureComponent<WidgetTextSettingPr
                 helpText={this.props.helpText}
                 inputId={this.props.id}
                 footer={this.props.footer}
+                type = {type}
             >
                 {input}
             </Setting>

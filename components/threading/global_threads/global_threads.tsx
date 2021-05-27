@@ -157,15 +157,15 @@ const GlobalThreads = () => {
                             subtitle={formatMessage({
                                 id: 'globalThreads.threadPane.unreadMessageLink',
                                 defaultMessage: `
-                                    You have
+                                    Você tem
                                     {numUnread, plural,
-                                        =0 {no unread threads}
-                                        =1 {<link>{numUnread} thread</link>}
-                                        other {<link>{numUnread} threads</link>}
+                                        =0 {zero tópicos não lidos}
+                                        =1 {<link>{numUnread} tópicos</link>}
+                                        other {<link>{numUnread} tópicos</link>}
                                     }
                                     {numUnread, plural,
                                         =0 {}
-                                        other {with unread messages}
+                                        other {com mensagens não lidas}
                                     }
                                 `,
                             }, {

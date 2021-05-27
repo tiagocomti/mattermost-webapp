@@ -3,10 +3,8 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Modal} from 'react-bootstrap';
 import classNames from 'classnames';
 import {FormattedMessage, injectIntl} from 'react-intl';
-
 
 import {Posts} from 'mattermost-redux/constants';
 import {sortFileInfos} from 'mattermost-redux/utils/file_utils';
@@ -45,8 +43,6 @@ import TutorialTip from 'components/tutorial/tutorial_tip';
 
 import FormattedMarkdownMessage from 'components/formatted_markdown_message.jsx';
 import MessageSubmitError from 'components/message_submit_error';
-import ChannelInviteModal from "../channel_invite_modal";
-import MemberListChannel from "../member_list_channel";
 
 const KeyCodes = Constants.KeyCodes;
 
@@ -574,6 +570,16 @@ class CreatePost extends React.PureComponent {
         return command === 'online' || command === 'away' ||
             command === 'dnd' || command === 'offline';
     };
+
+
+    handleSubmitDialog = async (e) => {
+        const channelId = this.props.currentChannel.id;
+        let args = {};
+        args.channel_id = channelId;
+        args.team_id = this.props.currentTeamId;
+
+        await this.props.actions.executeCommand("/radar", args);
+    }
 
     handleSubmit = async (e) => {
         const {
@@ -1605,31 +1611,12 @@ class CreatePost extends React.PureComponent {
         }else{
             return(
                 <div>
-                    <Modal
-                        dialogClassName='a11y__modal more-modal more-modal--action'
-                        show={this.state.show}
-                        onHide={this.handleHide}
-                        onExited={this.handleExit}
-                        role='dialog'
-                        aria-labelledby='channelMembersModalLabel'
-                        id='channelMembersModal'
+                    <button
+                        id='create_post_radar'
+                        onClick={this.handleSubmitDialog}
                     >
-                        <Modal.Header closeButton={true}>
-                            <Modal.Title
-                                componentClass='h1'
-                                id='channelMembersModalLabel'
-                            >
-                                <span className='name'>{'Teste 123'}</span>
-                                <FormattedMessage
-                                    id='channel_members_modal.members'
-                                    defaultMessage=' Members'
-                                />
-                            </Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            aaaa
-                        </Modal.Body>
-                    </Modal>
+                         Apenas um tste
+                    </button>
                 </div>
             );
         }

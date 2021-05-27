@@ -5,4 +5,3 @@ import WebSocketClient from './websocket_client';
 
 var WebClient = new WebSocketClient();
 export default WebClient;
-
