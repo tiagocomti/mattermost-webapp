@@ -125,6 +125,8 @@ type Props = {
     };
 
     shouldShowDotMenu: boolean;
+
+    collapsedThreadsEnabled: boolean;
 };
 
 type State = {
@@ -188,7 +190,7 @@ export default class PostInfo extends React.PureComponent<Props, State> {
             return null;
         }
 
-        const {isMobile, isReadOnly} = this.props;
+        const {isMobile, isReadOnly, collapsedThreadsEnabled} = this.props;
         const hover = this.props.hover || this.state.showEmojiPicker || this.state.showDotMenu || this.state.showOptionsMenuWithoutHover;
 
         const showCommentIcon = fromAutoResponder ||
@@ -199,7 +201,7 @@ export default class PostInfo extends React.PureComponent<Props, State> {
             commentIcon = (
                 <CommentIcon
                     handleCommentClick={this.props.handleCommentClick}
-                    commentCount={this.props.replyCount}
+                    commentCount={collapsedThreadsEnabled ? undefined : this.props.replyCount}
                     postId={post.id}
                     extraClass={commentIconExtraClass}
                 />
@@ -256,10 +258,11 @@ export default class PostInfo extends React.PureComponent<Props, State> {
                 data-testid={`post-menu-${post.id}`}
                 className={'col post-menu'}
             >
-                {dotMenu}
+                {!collapsedThreadsEnabled && dotMenu}
                 {postReaction}
                 {postFlagIcon}
                 {commentIcon}
+                {collapsedThreadsEnabled && dotMenu}
             </div>
         );
     };
