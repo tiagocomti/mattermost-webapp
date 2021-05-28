@@ -100,7 +100,7 @@ export default class MenuWrapper extends React.PureComponent<Props, State> {
          * version (ie the one that uses a modal) needs propagation to close the modal after selecting something
          * We need to refactor this so that the modal is explicitly closed on toggle, but for now I am aiming to preserve the existing logic
          * so as to not break other things
-        **/
+         **/
         if (this.props.stopPropagationOnToggle) {
             e.preventDefault();
             e.stopPropagation();

@@ -1614,8 +1614,10 @@ class CreatePost extends React.PureComponent {
                     <button
                         id='create_post_radar'
                         onClick={this.handleSubmitDialog}
+                        style={{width: "100%"}}
+                        className={'AdminButtonOutline btn btn-primary'}
                     >
-                         Apenas um tste
+                        Compartilhe conosco sua ideia
                     </button>
                 </div>
             );

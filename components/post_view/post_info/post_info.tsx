@@ -23,6 +23,7 @@ import PostFlagIcon from 'components/post_view/post_flag_icon';
 import PostReaction from 'components/post_view/post_reaction';
 import PostTime from 'components/post_view/post_time';
 import InfoSmallIcon from 'components/widgets/icons/info_small_icon';
+import Menu from "../../widgets/menu/menu";
 
 type Props = {
 
@@ -125,6 +126,8 @@ type Props = {
     };
 
     shouldShowDotMenu: boolean;
+
+    collapsedThreadsEnabled: boolean;
 };
 
 type State = {
@@ -188,18 +191,18 @@ export default class PostInfo extends React.PureComponent<Props, State> {
             return null;
         }
 
-        const {isMobile, isReadOnly} = this.props;
+        const {isMobile, isReadOnly, collapsedThreadsEnabled} = this.props;
         const hover = this.props.hover || this.state.showEmojiPicker || this.state.showDotMenu || this.state.showOptionsMenuWithoutHover;
 
         const showCommentIcon = fromAutoResponder ||
-        (!isSystemMessage && (isMobile || hover || (!post.root_id && Boolean(this.props.replyCount)) || this.props.isFirstReply));
+            (!isSystemMessage && (isMobile || hover || (!post.root_id && Boolean(this.props.replyCount)) || this.props.isFirstReply));
         const commentIconExtraClass = isMobile ? '' : 'pull-right';
         let commentIcon;
         if (showCommentIcon) {
             commentIcon = (
                 <CommentIcon
                     handleCommentClick={this.props.handleCommentClick}
-                    commentCount={this.props.replyCount}
+                    commentCount={collapsedThreadsEnabled ? undefined : this.props.replyCount}
                     postId={post.id}
                     extraClass={commentIconExtraClass}
                 />
@@ -256,10 +259,11 @@ export default class PostInfo extends React.PureComponent<Props, State> {
                 data-testid={`post-menu-${post.id}`}
                 className={'col post-menu'}
             >
-                {dotMenu}
+                {!collapsedThreadsEnabled && dotMenu}
                 {postReaction}
                 {postFlagIcon}
                 {commentIcon}
+                {collapsedThreadsEnabled && dotMenu}
             </div>
         );
     };
@@ -285,7 +289,7 @@ export default class PostInfo extends React.PureComponent<Props, State> {
                     boundingRectOfPostInfo.bottom < (window.innerHeight - 85);
 
                 if (isPostHeaderVisibleToUser && !isEphemeralPost && !isSystemMessage && !isAutoRespondersPost &&
-                        !isFailedPost && !isDeletedPost && !isReadOnly && !isMobile && enableEmojiPicker) {
+                    !isFailedPost && !isDeletedPost && !isReadOnly && !isMobile && enableEmojiPicker) {
                     this.setState({
                         showOptionsMenuWithoutHover: true,
                     }, () => {
@@ -300,7 +304,7 @@ export default class PostInfo extends React.PureComponent<Props, State> {
         const {shortcutReactToLastPostEmittedFrom, isLastPost} = this.props;
 
         const shortcutReactToLastPostEmittedFromCenter = prevProps.shortcutReactToLastPostEmittedFrom !== shortcutReactToLastPostEmittedFrom &&
-        shortcutReactToLastPostEmittedFrom === Locations.CENTER;
+            shortcutReactToLastPostEmittedFrom === Locations.CENTER;
         if (shortcutReactToLastPostEmittedFromCenter && isLastPost !== undefined) {
             this.handleShortcutReactToLastPost(isLastPost);
         }

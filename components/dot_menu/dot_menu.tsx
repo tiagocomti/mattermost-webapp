@@ -10,6 +10,9 @@ import Permissions from 'mattermost-redux/constants/permissions';
 import {Post} from 'mattermost-redux/types/posts';
 import {AppBinding} from 'mattermost-redux/types/apps';
 import {AppCallResponseTypes, AppCallTypes, AppExpandLevels} from 'mattermost-redux/constants/apps';
+import {UserThread} from 'mattermost-redux/types/threads';
+import {Team} from 'mattermost-redux/types/teams';
+import {$ID} from 'mattermost-redux/types/utilities';
 
 import {DoAppCall, PostEphemeralCallResponseForPost} from 'types/apps';
 import {Locations, ModalIdentifiers, Constants} from 'utils/constants';
@@ -104,10 +107,21 @@ type Props = {
          */
         postEphemeralCallResponseForPost: PostEphemeralCallResponseForPost;
 
+        /**
+         * Function to set the thread as followed/unfollowed
+         */
+        setThreadFollow: (userId: string, teamId: string, threadId: string, newState: boolean) => void;
+
     }; // TechDebt: Made non-mandatory while converting to typescript
 
     canEdit: boolean;
     canDelete: boolean;
+    userId: string;
+    currentTeamId: $ID<Team>;
+    threadId: $ID<UserThread>;
+    isCollapsedThreadsEnabled: boolean;
+    isFollowingThread?: boolean;
+    threadReplyCount?: number;
 }
 
 type State = {
@@ -239,6 +253,16 @@ export class DotMenuClass extends React.PureComponent<Props, State> {
         );
     }
 
+    handleSetThreadFollow = () => {
+        const {actions, currentTeamId, threadId, userId, isFollowingThread} = this.props;
+        actions.setThreadFollow(
+            userId,
+            currentTeamId,
+            threadId,
+            !isFollowingThread,
+        );
+    }
+
     tooltip = (
         <Tooltip
             id='dotmenu-icon-tooltip'
@@ -318,23 +342,23 @@ export class DotMenuClass extends React.PureComponent<Props, State> {
 
         const callResp = res.data!;
         switch (callResp.type) {
-        case AppCallResponseTypes.OK:
-            if (callResp.markdown) {
-                this.props.actions.postEphemeralCallResponseForPost(callResp, callResp.markdown, post);
+            case AppCallResponseTypes.OK:
+                if (callResp.markdown) {
+                    this.props.actions.postEphemeralCallResponseForPost(callResp, callResp.markdown, post);
+                }
+                break;
+            case AppCallResponseTypes.NAVIGATE:
+            case AppCallResponseTypes.FORM:
+                break;
+            default: {
+                const errorMessage = intl.formatMessage({
+                    id: 'apps.error.responses.unknown_type',
+                    defaultMessage: 'App response type not supported. Response type: {type}.',
+                }, {
+                    type: callResp.type,
+                });
+                this.props.actions.postEphemeralCallResponseForPost(callResp, errorMessage, post);
             }
-            break;
-        case AppCallResponseTypes.NAVIGATE:
-        case AppCallResponseTypes.FORM:
-            break;
-        default: {
-            const errorMessage = intl.formatMessage({
-                id: 'apps.error.responses.unknown_type',
-                defaultMessage: 'App response type not supported. Response type: {type}.',
-            }, {
-                type: callResp.type,
-            });
-            this.props.actions.postEphemeralCallResponseForPost(callResp, errorMessage, post);
-        }
         }
     }
 
@@ -343,35 +367,35 @@ export class DotMenuClass extends React.PureComponent<Props, State> {
         const isMobile = Utils.isMobile();
 
         const pluginItems = this.props.pluginMenuItems?.
-            filter((item) => {
-                return item.filter ? item.filter(this.props.post.id) : item;
-            }).
-            map((item) => {
-                if (item.subMenu) {
-                    return (
-                        <Menu.ItemSubMenu
-                            key={item.id + '_pluginmenuitem'}
-                            id={item.id}
-                            postId={this.props.post.id}
-                            text={item.text}
-                            subMenu={item.subMenu}
-                            action={item.action}
-                            root={true}
-                        />
-                    );
-                }
+        filter((item) => {
+            return item.filter ? item.filter(this.props.post.id) : item;
+        }).
+        map((item) => {
+            if (item.subMenu) {
                 return (
-                    <Menu.ItemAction
+                    <Menu.ItemSubMenu
                         key={item.id + '_pluginmenuitem'}
+                        id={item.id}
+                        postId={this.props.post.id}
                         text={item.text}
-                        onClick={() => {
-                            if (item.action) {
-                                item.action(this.props.post.id);
-                            }
-                        }}
+                        subMenu={item.subMenu}
+                        action={item.action}
+                        root={true}
                     />
                 );
-            }) || [];
+            }
+            return (
+                <Menu.ItemAction
+                    key={item.id + '_pluginmenuitem'}
+                    text={item.text}
+                    onClick={() => {
+                        if (item.action) {
+                            item.action(this.props.post.id);
+                        }
+                    }}
+                />
+            );
+        }) || [];
 
         let appBindings = [] as JSX.Element[];
         if (this.props.appsEnabled && this.props.appBindings) {
@@ -441,6 +465,26 @@ export class DotMenuClass extends React.PureComponent<Props, State> {
                             onClick={this.handleAddReactionMenuItemActivated}
                         />
                     </ChannelPermissionGate>
+                    <Menu.ItemAction
+                        id={`follow_post_thread_${this.props.post.id}`}
+                        onClick={this.handleSetThreadFollow}
+                        show={(
+                            !isSystemMessage &&
+                            this.props.isCollapsedThreadsEnabled &&
+                            (
+                                this.props.location === Locations.CENTER ||
+                                this.props.location === Locations.RHS_ROOT ||
+                                this.props.location === Locations.RHS_COMMENT
+                            )
+                        )}
+                        {...this.props.isFollowingThread ? {
+                            text: this.props.threadReplyCount ? Utils.localizeMessage('threading.threadMenu.unfollow', 'Unfollow thread') : Utils.localizeMessage('threading.threadMenu.unfollowMessage', 'Unfollow message'),
+                            extraText: Utils.localizeMessage('threading.threadMenu.unfollowExtra', 'You won’t be notified about replies'),
+                        } : {
+                            text: this.props.threadReplyCount ? Utils.localizeMessage('threading.threadMenu.follow', 'Follow thread') : Utils.localizeMessage('threading.threadMenu.followMessage', 'Follow message'),
+                            extraText: Utils.localizeMessage('threading.threadMenu.followExtra', 'You will be notified about replies'),
+                        }}
+                    />
                     <Menu.ItemAction
                         id={`unread_post_${this.props.post.id}`}
                         show={!isSystemMessage && !this.props.channelIsArchived && this.props.location !== Locations.SEARCH}
