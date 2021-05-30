@@ -122,21 +122,7 @@ export default class TextboxLinks extends React.PureComponent<Props> {
         );
 
         return (
-            <div className={'help__text ' + helpTextClass}>
-                {helpText}
-                {previewLink}
-                <Link
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    to='/help/messaging'
-                    className='textbox-help-link'
-                >
-                    <FormattedMessage
-                        id='textbox.help'
-                        defaultMessage='Help'
-                    />
-                </Link>
-            </div>
+            <div></div>
         );
     }
 }

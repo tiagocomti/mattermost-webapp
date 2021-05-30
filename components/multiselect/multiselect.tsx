@@ -481,7 +481,6 @@ export default class MultiSelect<T extends Value> extends React.PureComponent<Pr
                             className='multi-select__help'
                         >
                             {numRemainingText}
-                            {memberCount}
                         </div>
                     </div>
                     {multiSelectList}

@@ -347,7 +347,6 @@ class ProfilePopover extends React.PureComponent {
 
         var dataContent = [];
         const urlSrc = this.props.overwriteIcon ? this.props.overwriteIcon : this.props.src;
-        console.log("teste",this.props.user.roles);
         dataContent.push(
             <div
                 className='user-popover-image status-selector-agf zindex-agf tooltip-agf'
@@ -583,38 +582,6 @@ class ProfilePopover extends React.PureComponent {
                     </a>
                 </div>,
             );
-
-            if (this.props.canManageAnyChannelMembersInCurrentTeam && this.props.isInCurrentTeam) {
-                const addToChannelMessage = formatMessage({id: 'user_profile.add_user_to_channel', defaultMessage: 'Add to a Channel'});
-                dataContent.push(
-                    <div
-                        data-toggle='tooltip'
-                        className='popover__row first'
-                        key='user-popover-add-to-channel'
-                    >
-                        <a
-                            href='#'
-                            className='text-nowrap'
-                            onClick={this.handleAddToChannel}
-                        >
-                            <ToggleModalButtonRedux
-                                accessibilityLabel={addToChannelMessage}
-                                modalId={ModalIdentifiers.ADD_USER_TO_CHANNEL}
-                                role='menuitem'
-                                dialogType={AddUserToChannelModal}
-                                dialogProps={{user: this.props.user}}
-                                onClick={this.props.hide}
-                            >
-                                <LocalizedIcon
-                                    className='fa fa-user-plus'
-                                    title={{id: t('user_profile.add_user_to_channel.icon'), defaultMessage: 'Add User to Channel Icon'}}
-                                />
-                                {addToChannelMessage}
-                            </ToggleModalButtonRedux>
-                        </a>
-                    </div>,
-                );
-            }
         }
 
         dataContent.push(

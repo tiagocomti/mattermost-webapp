@@ -114,7 +114,7 @@ class SwitchChannelSuggestion extends Suggestion {
             icon = (
                 <div className='suggestion-list__icon suggestion-list__icon--large'>
                     <span alt=':crocodile:' className='emoticon' title=':crocodile:'
-                          style={{backgroundImage: 'url(http://18.225.37.143:8065/static/emoji/1f40a.png)',marginRight: '9px'}}>:crocodile:</span>
+                          style={{backgroundImage: 'url(/static/emoji/1f40a.png)',marginRight: '9px'}}>:crocodile:</span>
                 </div>
             );
         }
