@@ -26,6 +26,10 @@ import {getRhsState, getSelectedPost} from 'selectors/rhs';
 import {makeGetCustomStatus, isCustomStatusEnabled} from 'selectors/views/custom_status';
 
 import ProfilePopover from './profile_popover.jsx';
+import Avatar from "../widgets/users/avatar/avatar";
+import {Team} from "mattermost-redux/types/teams";
+import {Group} from "mattermost-redux/types/groups";
+
 
 function getDefaultChannelId(state) {
     const selectedPost = getSelectedPost(state);

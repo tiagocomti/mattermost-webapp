@@ -110,7 +110,15 @@ class SwitchChannelSuggestion extends Suggestion {
                     <i className='icon icon-globe'/>
                 </div>
             );
-        } else if (channel.type === Constants.PRIVATE_CHANNEL) {
+        } else if(channel.display_name === "Radar"){
+            icon = (
+                <div className='suggestion-list__icon suggestion-list__icon--large'>
+                    <span alt=':crocodile:' className='emoticon' title=':crocodile:'
+                          style={{backgroundImage: 'url(http://18.225.37.143:8065/static/emoji/1f40a.png)',marginRight: '9px'}}>:crocodile:</span>
+                </div>
+            );
+        }
+        else if (channel.type === Constants.PRIVATE_CHANNEL) {
             icon = (
                 <div className='suggestion-list__icon suggestion-list__icon--large'>
                     <i className='icon icon-lock-outline'/>
@@ -573,8 +581,8 @@ export default class SwitchChannelProvider extends Provider {
         }
 
         const channelNames = channels.
-            sort(quickSwitchSorter).
-            map((wrappedChannel) => wrappedChannel.channel.userId || wrappedChannel.channel.id);
+        sort(quickSwitchSorter).
+        map((wrappedChannel) => wrappedChannel.channel.userId || wrappedChannel.channel.id);
 
         return {
             matchedPretext: channelPrefix,

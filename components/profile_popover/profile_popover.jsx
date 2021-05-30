@@ -30,6 +30,7 @@ import CustomStatusModal from 'components/custom_status/custom_status_modal';
 import CustomStatusText from 'components/custom_status/custom_status_text';
 
 import './profile_popover.scss';
+import {Permissions} from "mattermost-redux/constants";
 
 /**
  * The profile popover, or hovercard, that appears with user information when clicking
@@ -140,6 +141,7 @@ class ProfilePopover extends React.PureComponent {
          * react-intl helper object
          */
         intl: intlShape.isRequired,
+        roles: PropTypes.string,
 
         ...Popover.propTypes,
     }
@@ -149,10 +151,12 @@ class ProfilePopover extends React.PureComponent {
         hasMention: false,
         status: UserStatuses.OFFLINE,
         customStatus: {},
+        roles: "",
     }
 
     constructor(props) {
         super(props);
+        this.roles = props.roles;
         this.state = {
             loadingDMChannel: -1,
         };
@@ -337,17 +341,24 @@ class ProfilePopover extends React.PureComponent {
         delete popoverProps.isChannelAdmin;
         delete popoverProps.canManageAnyChannelMembersInCurrentTeam;
         delete popoverProps.intl;
+        delete popoverProps.roles;
 
         const {formatMessage} = this.props.intl;
 
         var dataContent = [];
         const urlSrc = this.props.overwriteIcon ? this.props.overwriteIcon : this.props.src;
-
+        console.log("teste",this.props.user.roles);
         dataContent.push(
             <div
-                className='user-popover-image'
+                className='user-popover-image status-selector-agf zindex-agf tooltip-agf'
                 key='user-popover-image'
             >
+                {this.props.user.roles != undefined && this.props.user.roles.includes(Permissions.USER_FRAME_GOLD) == true &&
+                    <div class='moldura-gold-popover'></div>
+                }
+                {this.props.user.roles != undefined && this.props.user.roles.includes(Permissions.USER_FRAME_BRONZE) == true &&
+                    <div class='moldura-bronze-popover'></div>
+                }
                 <Avatar
                     size='xxl'
                     username={this.props.user.username}
@@ -355,8 +366,9 @@ class ProfilePopover extends React.PureComponent {
                 />
                 <StatusIcon
                     className='status user-popover-status'
-                    status={this.props.status}
+                    status={this.props.user.roles}
                     button={true}
+                    popover={true}
                 />
             </div>,
         );

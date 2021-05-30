@@ -81,7 +81,7 @@ export default class SidebarHeaderDropdown extends React.PureComponent {
                     getFirstAdminVisitMarketplaceStatus={this.props.actions.getFirstAdminVisitMarketplaceStatus}
                     showUnread={isAdmin(this.props.currentUser.roles) && !this.props.firstAdminVisitMarketplaceStatus}
                 />
-                <MainMenu id='sidebarDropdownMenu'/>
+                <div></div>
             </MenuWrapper>
         );
     }

@@ -36,6 +36,7 @@ export default class BoolSetting extends React.PureComponent<Props> {
                 inputClassName={this.props.inputClassName}
                 helpText={this.props.helpText}
                 inputId={this.props.id}
+                resize={true}
             >
                 <div className='checkbox'>
                     <label>

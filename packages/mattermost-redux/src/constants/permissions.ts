@@ -217,6 +217,11 @@ const values = {
     SYSCONSOLE_WRITE_EXPERIMENTAL_FEATURE_FLAGS: 'sysconsole_write_experimental_feature_flags',
     SYSCONSOLE_READ_EXPERIMENTAL_BLEVE: 'sysconsole_read_experimental_bleve',
     SYSCONSOLE_WRITE_EXPERIMENTAL_BLEVE: 'sysconsole_write_experimental_bleve',
+    USER_FRAME_GOLD: 'user_gold',
+    USER_FRAME_BRONZE: 'user_bronze',
+    USER_STATUS_MODERATOR: 'user_moderator',
+    USER_STATUS_MENTOR: 'user_mentor',
+    USER_STATUS_FOUNDER: 'user_founder',
 
     CHANNEL_MODERATED_PERMISSIONS: {
         CREATE_POST: 'create_post',

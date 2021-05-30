@@ -28,6 +28,7 @@ export type UserProfileProps = {
     isRHS?: boolean;
     overwriteImage?: React.ReactNode;
     channelId?: string;
+    roles?: string;
 }
 
 export default class UserProfile extends PureComponent<UserProfileProps> {
@@ -41,6 +42,7 @@ export default class UserProfile extends PureComponent<UserProfileProps> {
         isRHS: false,
         overwriteImage: '',
         overwriteName: '',
+        roles: '',
     }
 
     hideProfilePopover = (): void => {
@@ -123,6 +125,7 @@ export default class UserProfile extends PureComponent<UserProfileProps> {
                             hasMention={hasMention}
                             overwriteName={overwriteName}
                             overwriteIcon={overwriteIcon}
+                            roles = {this.props.roles}
                         />
                     }
                 >

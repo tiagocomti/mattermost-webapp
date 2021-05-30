@@ -42,6 +42,7 @@ type Props = {
     teammateName?: string;
     stats: any;
     theme: any;
+    roles?: string;
     usersLimit: number;
     actions: {
         getTotalUsersStats: () => any;
@@ -97,16 +98,18 @@ function createGMIntroMessage(channel: Channel, centeredIntro: string, profiles:
 
     if (profiles.length > 0) {
         const pictures = profiles.
-            filter((profile) => profile.id !== currentUserId).
-            map((profile) => (
-                <ProfilePicture
-                    key={'introprofilepicture' + profile.id}
-                    src={Utils.imageURLForUser(profile.id, profile.last_picture_update)}
-                    size='xl'
-                    userId={profile.id}
-                    username={profile.username}
-                />
-            ));
+        filter((profile) => profile.id !== currentUserId).
+        map((profile) => (
+            <ProfilePicture
+                key={'introprofilepicture' + profile.id}
+                src={Utils.imageURLForUser(profile.id, profile.last_picture_update)}
+                size='xl'
+                status={profile.roles}
+                roles={profile.roles}
+                userId={profile.id}
+                username={profile.username}
+            />
+        ));
 
         return (
             <div
@@ -295,13 +298,13 @@ export function createDefaultIntroMessage(
                     permissions={[Permissions.ADD_USER_TO_TEAM]}
                 >
                     {!teamIsGroupConstrained &&
-                        <AddMembersButton
-                            setHeader={setHeaderButton}
-                            totalUsers={totalUsers}
-                            usersLimit={usersLimit}
-                            channel={channel}
-                            theme={theme}
-                        />
+                    <AddMembersButton
+                        setHeader={setHeaderButton}
+                        totalUsers={totalUsers}
+                        usersLimit={usersLimit}
+                        channel={channel}
+                        theme={theme}
+                    />
                     }
                     {teamIsGroupConstrained &&
                     <ToggleModalButton
@@ -347,22 +350,22 @@ export function createDefaultIntroMessage(
             </h2>
             <p className='channel-intro__content'>
                 {!isReadOnly &&
-                    <FormattedMarkdownMessage
-                        id='intro_messages.default'
-                        defaultMessage='**Welcome to {display_name}!**\n \nPost messages here that you want everyone to see. Everyone automatically becomes a permanent member of this channel when they join the team.'
-                        values={{
-                            display_name: channel.display_name,
-                        }}
-                    />
+                <FormattedMarkdownMessage
+                    id='intro_messages.default'
+                    defaultMessage='**Welcome to {display_name}!**\n \nPost messages here that you want everyone to see. Everyone automatically becomes a permanent member of this channel when they join the team.'
+                    values={{
+                        display_name: channel.display_name,
+                    }}
+                />
                 }
                 {isReadOnly &&
-                    <FormattedMarkdownMessage
-                        id='intro_messages.readonly.default'
-                        defaultMessage='**Welcome to {display_name}!**\n \nMessages can only be posted by system admins. Everyone automatically becomes a permanent member of this channel when they join the team.'
-                        values={{
-                            display_name: channel.display_name,
-                        }}
-                    />
+                <FormattedMarkdownMessage
+                    id='intro_messages.readonly.default'
+                    defaultMessage='**Welcome to {display_name}!**\n \nMessages can only be posted by system admins. Everyone automatically becomes a permanent member of this channel when they join the team.'
+                    values={{
+                        display_name: channel.display_name,
+                    }}
+                />
                 }
             </p>
             {teamInviteLink}

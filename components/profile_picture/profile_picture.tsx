@@ -10,6 +10,10 @@ import StatusIconNew from 'components/status_icon_new';
 import Avatar from 'components/widgets/users/avatar';
 
 import './profile_picture.scss';
+import {Permissions} from "mattermost-redux/constants";
+import SystemPermissionGate from "../permissions_gates/system_permission_gate";
+import {getMySystemRoles} from "mattermost-redux/selectors/entities/roles_helpers";
+import SimpleTooltip from "../widgets/simple_tooltip";
 
 interface MMOverlayTrigger extends BaseOverlayTrigger {
     hide: () => void;
@@ -32,9 +36,7 @@ type Props = {
     overwriteName?: string;
     newStatusIcon?: boolean;
     statusClass?: string;
-    isBot?: boolean;
-    fromWebhook?: boolean;
-    fromAutoResponder?: boolean;
+    roles?: string;
 }
 
 export default class ProfilePicture extends React.PureComponent<Props> {
@@ -63,8 +65,6 @@ export default class ProfilePicture extends React.PureComponent<Props> {
 
         const profileIconClass = `profile-icon ${this.props.isEmoji ? 'emoji' : ''}`;
 
-        const hideStatus = this.props.isBot || this.props.fromAutoResponder || this.props.fromWebhook;
-
         if (this.props.userId) {
             return (
                 <OverlayTrigger
@@ -84,14 +84,22 @@ export default class ProfilePicture extends React.PureComponent<Props> {
                             hasMention={this.props.hasMention}
                             overwriteIcon={this.props.overwriteIcon}
                             overwriteName={this.props.overwriteName}
-                            hideStatus={hideStatus}
+                            roles={this.props.roles}
                         />
                     }
                 >
                     <button
-                        className={`status-wrapper style--none ${this.props.wrapperClass}`}
+                        className={`status-wrapper style--none tooltip-agf zindex-agf tooltip-agf ${this.props.wrapperClass}`}
                         tabIndex={-1}
                     >
+
+                        {this.props.roles != undefined && this.props.roles.includes(Permissions.USER_FRAME_GOLD) == true &&
+                        <div class='moldura-gold'></div>
+                        }
+                        {this.props.roles != undefined && this.props.roles.includes(Permissions.USER_FRAME_BRONZE) == true &&
+                        <div class='moldura-bronze'></div>
+                        }
+
                         <span className={profileIconClass}>
                             <Avatar
                                 username={this.props.username}
@@ -99,7 +107,8 @@ export default class ProfilePicture extends React.PureComponent<Props> {
                                 url={this.props.src}
                             />
                         </span>
-                        <StatusIcon status={this.props.status}/>
+                        <StatusIcon status={this.props.roles}/>
+
                     </button>
                 </OverlayTrigger>
             );
@@ -115,9 +124,10 @@ export default class ProfilePicture extends React.PureComponent<Props> {
                 {this.props.newStatusIcon ? (
                     <StatusIconNew
                         className={this.props.statusClass}
-                        status={this.props.status}
+                        status={this.props.roles}
+                        roles={this.props.roles}
                     />
-                ) : <StatusIcon status={this.props.status}/>}
+                ) : <StatusIcon status={this.props.roles} roles={this.props.roles} />}
             </span>
         );
     }

@@ -17,12 +17,6 @@ describe('components/StatusDropdown', () => {
     const baseProps = {
         actions,
         userId: '',
-        userTimezone: {
-            useAutomaticTimezone: 'true',
-            automaticTimezone: 'America/New_York',
-            manualTimezone: '',
-        },
-        isTimezoneEnabled: true,
         isCustomStatusEnabled: false,
         isStatusDropdownOpen: false,
         showCustomStatusPulsatingDot: false,

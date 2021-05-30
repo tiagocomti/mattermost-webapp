@@ -4,7 +4,7 @@
 import React from 'react';
 
 import * as Utils from 'utils/utils.jsx';
-import StatusDropdown from 'components/status_dropdown';
+import StatusDropdown from 'components/status_dropdown/index.jsx';
 
 import SidebarHeaderDropdown from 'components/legacy_sidebar/header/dropdown';
 
@@ -12,9 +12,11 @@ type State = {
     isMobile: boolean;
 }
 
-export default class SidebarHeader extends React.PureComponent<any, State> {
-    constructor(props: any) {
+
+export default class SidebarHeader extends React.PureComponent {
+    constructor(props) {
         super(props);
+        this.roles = props.roles;
         this.state = {
             isMobile: Utils.isMobile(),
         };
@@ -40,7 +42,7 @@ export default class SidebarHeader extends React.PureComponent<any, State> {
             <div
                 id='lhsHeader'
                 aria-label={ariaLabel}
-                tabIndex={-1}
+                tabIndex='-1'
                 role='application'
                 className='SidebarHeader team__header theme a11y__region'
                 data-a11y-sort-order='5'

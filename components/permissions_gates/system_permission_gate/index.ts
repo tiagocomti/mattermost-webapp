@@ -3,7 +3,10 @@
 
 import {connect} from 'react-redux';
 
-import {haveISystemPermission} from 'mattermost-redux/selectors/entities/roles';
+import {
+    getMySystemRoles,
+    haveISystemPermission
+} from 'mattermost-redux/selectors/entities/roles';
 
 import {GlobalState} from 'types/store';
 
@@ -14,12 +17,18 @@ type Props = {
 }
 function mapStateToProps(state: GlobalState, ownProps: Props) {
     for (const permission of ownProps.permissions) {
-        if (haveISystemPermission(state, {permission})) {
+        if(permission == "user_gold" || permission == "user_bronze" ){
+            let myPermissions = getMySystemRoles(state);
+            if(myPermissions.has(permission))
+            {
+                return {hasPermission: true};
+            }
+        }
+        else if (haveISystemPermission(state, {permission})) {
             return {hasPermission: true};
         }
     }
 
     return {hasPermission: false};
 }
-
 export default connect(mapStateToProps)(SystemPermissionGate);

@@ -125,23 +125,7 @@ export default class SidebarHeaderDropdownButton extends React.PureComponent {
                         >
                             {'@' + this.props.currentUser.username}
                         </div>
-                        <CustomStatusEmoji
-                            showTooltip={true}
-                            tooltipDirection='bottom'
-                            emojiStyle={{
-                                verticalAlign: 'top',
-                                marginLeft: 2,
-                            }}
-                            onClick={this.handleCustomStatusEmojiClick}
-                        />
                     </div>
-                    <button
-                        className='style--none sidebar-header-dropdown__icon'
-                        aria-label={localizeMessage('navbar_dropdown.menuAriaLabel', 'main menu')}
-                    >
-                        {badge}
-                        <MenuIcon/>
-                    </button>
                 </div>
             </div>
         );

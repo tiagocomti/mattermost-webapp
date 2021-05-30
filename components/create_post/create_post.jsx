@@ -571,6 +571,16 @@ class CreatePost extends React.PureComponent {
             command === 'dnd' || command === 'offline';
     };
 
+
+    handleSubmitDialog = async (e) => {
+        const channelId = this.props.currentChannel.id;
+        let args = {};
+        args.channel_id = channelId;
+        args.team_id = this.props.currentTeamId;
+
+        await this.props.actions.executeCommand("/radar", args);
+    }
+
     handleSubmit = async (e) => {
         const {
             currentChannel: updateChannel,
@@ -591,14 +601,14 @@ class CreatePost extends React.PureComponent {
             mentions = groupsMentionedInText(this.state.message, groupsWithAllowReference);
             if (mentions.length > 0) {
                 mentions = mentions.
-                    map((group) => {
-                        const mappedValue = channelMemberCountsByGroup[group.id];
-                        if (mappedValue && mappedValue.channel_member_count > Constants.NOTIFY_ALL_MEMBERS && mappedValue.channel_member_count > memberNotifyCount) {
-                            memberNotifyCount = mappedValue.channel_member_count;
-                            channelTimezoneCount = mappedValue.channel_member_timezones_count;
-                        }
-                        return `@${group.name}`;
-                    });
+                map((group) => {
+                    const mappedValue = channelMemberCountsByGroup[group.id];
+                    if (mappedValue && mappedValue.channel_member_count > Constants.NOTIFY_ALL_MEMBERS && mappedValue.channel_member_count > memberNotifyCount) {
+                        memberNotifyCount = mappedValue.channel_member_count;
+                        channelTimezoneCount = mappedValue.channel_member_timezones_count;
+                    }
+                    return `@${group.name}`;
+                });
                 mentions = [...new Set(mentions)];
             }
         }
@@ -1485,118 +1495,133 @@ class CreatePost extends React.PureComponent {
         if (renderScrollbar) {
             scrollbarClass = ' scroll';
         }
-
-        return (
-            <form
-                id='create_post'
-                ref={this.topDiv}
-                className={centerClass}
-                onSubmit={this.handleSubmit}
-            >
-                <div
-                    className={'post-create' + attachmentsDisabled + scrollbarClass}
-                    style={this.state.renderScrollbar && this.state.scrollbarWidth ? {'--detected-scrollbar-width': `${this.state.scrollbarWidth}px`} : undefined}
+        if(currentChannel.name !== "radar") {
+            return (
+                <form
+                    id='create_post'
+                    ref={this.topDiv}
+                    className={centerClass}
+                    onSubmit={this.handleSubmit}
                 >
-                    <div className='post-create-body'>
-                        <div
-                            role='application'
-                            id='centerChannelFooter'
-                            aria-label={ariaLabelMessageInput}
-                            tabIndex='-1'
-                            className='post-body__cell a11y__region'
-                            data-a11y-sort-order='2'
-                        >
-                            <Textbox
-                                onChange={this.handleChange}
-                                onKeyPress={this.postMsgKeyPress}
-                                onKeyDown={this.handleKeyDown}
-                                onSelect={this.handleSelect}
-                                onMouseUp={this.handleMouseUpKeyUp}
-                                onKeyUp={this.handleMouseUpKeyUp}
-                                onComposition={this.emitTypingEvent}
-                                onHeightChange={this.handleHeightChange}
-                                handlePostError={this.handlePostError}
-                                value={readOnlyChannel ? '' : this.state.message}
-                                onBlur={this.handleBlur}
-                                emojiEnabled={this.props.enableEmojiPicker}
-                                createMessage={createMessage}
-                                channelId={currentChannel.id}
-                                id='post_textbox'
-                                ref={this.textboxRef}
-                                disabled={readOnlyChannel}
-                                characterLimit={this.props.maxPostSize}
-                                preview={this.props.shouldShowPreview}
-                                badConnection={this.props.badConnection}
-                                listenForMentionKeyClick={true}
-                                useChannelMentions={this.props.useChannelMentions}
-                            />
-                            <span
-                                ref={this.createPostControlsRef}
-                                className='post-body__actions'
-                            >
-                                {callButton}
-                                {fileUpload}
-                                {emojiPicker}
-                                <a
-                                    role='button'
-                                    tabIndex='0'
-                                    aria-label={formatMessage({
-                                        id: 'create_post.send_message',
-                                        defaultMessage: 'Send a message',
-                                    })}
-                                    className={sendButtonClass}
-                                    onClick={this.handleSubmit}
-                                >
-                                    <LocalizedIcon
-                                        className='fa fa-paper-plane'
-                                        title={{
-                                            id: t('create_post.icon'),
-                                            defaultMessage: 'Create a post',
-                                        }}
-                                    />
-                                </a>
-                            </span>
-                        </div>
-                        {tutorialTip}
-                    </div>
                     <div
-                        id='postCreateFooter'
-                        role='form'
-                        className={postFooterClassName}
+                        className={'post-create' + attachmentsDisabled + scrollbarClass}
+                        style={this.state.renderScrollbar && this.state.scrollbarWidth ? {'--detected-scrollbar-width': `${this.state.scrollbarWidth}px`} : undefined}
                     >
-                        <div className='d-flex justify-content-between'>
-                            <MsgTyping
-                                channelId={currentChannel.id}
-                                postId=''
-                            />
-                            <TextboxLinks
-                                characterLimit={this.props.maxPostSize}
-                                showPreview={this.props.shouldShowPreview}
-                                updatePreview={this.setShowPreview}
-                                message={readOnlyChannel ? '' : this.state.message}
-                            />
+
+                        <div className='post-create-body'>
+                            <div
+                                role='application'
+                                id='centerChannelFooter'
+                                aria-label={ariaLabelMessageInput}
+                                tabIndex='-1'
+                                className='post-body__cell a11y__region'
+                                data-a11y-sort-order='2'
+                            >
+                                <Textbox
+                                    onChange={this.handleChange}
+                                    onKeyPress={this.postMsgKeyPress}
+                                    onKeyDown={this.handleKeyDown}
+                                    onSelect={this.handleSelect}
+                                    onMouseUp={this.handleMouseUpKeyUp}
+                                    onKeyUp={this.handleMouseUpKeyUp}
+                                    onComposition={this.emitTypingEvent}
+                                    onHeightChange={this.handleHeightChange}
+                                    handlePostError={this.handlePostError}
+                                    value={readOnlyChannel ? '' : this.state.message}
+                                    onBlur={this.handleBlur}
+                                    emojiEnabled={this.props.enableEmojiPicker}
+                                    createMessage={createMessage}
+                                    channelId={currentChannel.id}
+                                    id='post_textbox'
+                                    ref={this.textboxRef}
+                                    disabled={readOnlyChannel}
+                                    characterLimit={this.props.maxPostSize}
+                                    preview={this.props.shouldShowPreview}
+                                    badConnection={this.props.badConnection}
+                                    listenForMentionKeyClick={true}
+                                    useChannelMentions={this.props.useChannelMentions}
+                                />
+                                <span
+                                    ref={this.createPostControlsRef}
+                                    className='post-body__actions'
+                                >
+                                    {callButton}
+                                    {fileUpload}
+                                    {emojiPicker}
+                                    <a
+                                        role='button'
+                                        tabIndex='0'
+                                        aria-label={formatMessage({
+                                            id: 'create_post.send_message',
+                                            defaultMessage: 'Send a message',
+                                        })}
+                                        className={sendButtonClass}
+                                        onClick={this.handleSubmit}
+                                    >
+                                        <LocalizedIcon
+                                            className='fa fa-paper-plane'
+                                            title={{
+                                                id: t('create_post.icon'),
+                                                defaultMessage: 'Create a post',
+                                            }}
+                                        />
+                                    </a>
+                                </span>
+                            </div>
+                            {tutorialTip}
                         </div>
-                        <div>
-                            {postError}
-                            {preview}
-                            {serverError}
+                        <div
+                            id='postCreateFooter'
+                            role='form'
+                            className={postFooterClassName}
+                        >
+                            <div className='d-flex justify-content-between'>
+                                <MsgTyping
+                                    channelId={currentChannel.id}
+                                    postId=''
+                                />
+                                <TextboxLinks
+                                    characterLimit={this.props.maxPostSize}
+                                    showPreview={this.props.shouldShowPreview}
+                                    updatePreview={this.setShowPreview}
+                                    message={readOnlyChannel ? '' : this.state.message}
+                                />
+                            </div>
+                            <div>
+                                {postError}
+                                {preview}
+                                {serverError}
+                            </div>
                         </div>
                     </div>
+                    <PostDeletedModal
+                        show={this.state.showPostDeletedModal}
+                        onHide={this.hidePostDeletedModal}
+                    />
+                    <ConfirmModal
+                        title={notifyAllTitle}
+                        message={notifyAllMessage}
+                        confirmButtonText={notifyAllConfirm}
+                        show={this.state.showConfirmModal}
+                        onConfirm={this.handleNotifyAllConfirmation}
+                        onCancel={this.hideNotifyAllModal}
+                    />
+                </form>
+            );
+        }else{
+            return(
+                <div>
+                    <button
+                        id='create_post_radar'
+                        onClick={this.handleSubmitDialog}
+                        style={{width: "100%"}}
+                        className={'AdminButtonOutline btn btn-primary'}
+                    >
+                        Compartilhe conosco sua ideia
+                    </button>
                 </div>
-                <PostDeletedModal
-                    show={this.state.showPostDeletedModal}
-                    onHide={this.hidePostDeletedModal}
-                />
-                <ConfirmModal
-                    title={notifyAllTitle}
-                    message={notifyAllMessage}
-                    confirmButtonText={notifyAllConfirm}
-                    show={this.state.showConfirmModal}
-                    onConfirm={this.handleNotifyAllConfirmation}
-                    onCancel={this.hideNotifyAllModal}
-                />
-            </form>
-        );
+            );
+        }
     }
 }
 

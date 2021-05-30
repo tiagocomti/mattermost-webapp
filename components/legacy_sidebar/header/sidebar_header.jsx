@@ -4,7 +4,7 @@
 import React from 'react';
 
 import * as Utils from 'utils/utils.jsx';
-import StatusDropdown from 'components/status_dropdown';
+import StatusDropdown from 'components/status_dropdown/index.jsx';
 
 import SidebarHeaderDropdown from './dropdown';
 
@@ -45,7 +45,6 @@ export default class SidebarHeader extends React.PureComponent {
                     className='d-flex'
                 >
                     {!this.state.isMobile && <StatusDropdown/>}
-                    <SidebarHeaderDropdown/>
                 </div>
             </div>
         );
