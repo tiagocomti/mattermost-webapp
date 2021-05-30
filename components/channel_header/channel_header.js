@@ -469,15 +469,6 @@ class ChannelHeader extends React.PureComponent {
                 >
                     {dmHeaderIconStatus}
                     {dmHeaderTextStatus}
-                    {popoverListMembers}
-                    <HeaderIconWrapper
-                        iconComponent={pinnedIcon}
-                        ariaLabel={true}
-                        buttonClass={pinnedIconClass}
-                        buttonId={'channelHeaderPinButton'}
-                        onClick={this.showPinnedPosts}
-                        tooltipKey={'pinnedPosts'}
-                    />
                     <HeaderIconWrapper
                         iconComponent={channelFilesIcon}
                         ariaLabel={true}
@@ -495,29 +486,6 @@ class ChannelHeader extends React.PureComponent {
                             message={headerText.replace(/\n+/g, ' ')}
                             options={this.getHeaderMarkdownOptions(channelNamesMap)}
                         /></div>
-                    <span
-                        className='header-description__text'
-                        onClick={this.handleFormattedTextClick}
-                        onMouseOver={() => this.showChannelHeaderPopover(headerText)}
-                        onMouseOut={() => this.setState({showChannelHeaderPopover: false})}
-                        ref={this.headerDescriptionRef}
-                    >
-
-                        <Overlay
-                            show={this.state.showChannelHeaderPopover}
-                            placement='bottom'
-                            rootClose={true}
-                            target={this.headerDescriptionRef.current}
-                            ref={this.headerOverlayRef}
-                            onEnter={this.setPopoverOverlayWidth}
-                            onHide={() => this.setState({showChannelHeaderPopover: false})}
-                        >{popoverContent}</Overlay>
-
-                        <Markdown
-                            message={headerText}
-                            options={this.getHeaderMarkdownOptions(channelNamesMap)}
-                        />
-                    </span>
                 </div>
             );
         } else {
@@ -525,58 +493,10 @@ class ChannelHeader extends React.PureComponent {
             if (!isReadOnly && !channelIsArchived) {
                 if (isDirect || isGroup) {
                     if (!isDirect || !dmUser.is_bot) {
-                        editMessage = (
-                            <button
-                                className='header-placeholder style--none'
-                                onClick={this.showEditChannelHeaderModal}
-                            >
-                                <FormattedMessage
-                                    id='channel_header.addChannelHeader'
-                                    defaultMessage='Add a channel description'
-                                />
-                                <FormattedMessage
-                                    id='channel_header.editLink'
-                                    defaultMessage='Edit'
-                                >
-                                    {(message) => (
-                                        <i
-                                            aria-label={message}
-                                            className='icon icon-pencil-outline edit-icon'
-                                        />
-                                    )}
-                                </FormattedMessage>
-                            </button>
-                        );
+                        editMessage = null;
                     }
                 } else {
-                    editMessage = (
-                        <ChannelPermissionGate
-                            channelId={channel.id}
-                            teamId={teamId}
-                            permissions={[isPrivate ? Permissions.MANAGE_PRIVATE_CHANNEL_PROPERTIES : Permissions.MANAGE_PUBLIC_CHANNEL_PROPERTIES]}
-                        >
-                            <button
-                                className='header-placeholder style--none'
-                                onClick={this.showEditChannelHeaderModal}
-                            >
-                                <FormattedMessage
-                                    id='channel_header.addChannelHeader'
-                                    defaultMessage='Add a channel description'
-                                />
-                                <FormattedMessage
-                                    id='channel_header.editLink'
-                                    defaultMessage='Edit'
-                                >
-                                    {(message) => (
-                                        <i
-                                            aria-label={message}
-                                            className='icon icon-pencil-outline edit-icon'
-                                        />
-                                    )}
-                                </FormattedMessage>
-                            </button>
-                        </ChannelPermissionGate>
-                    );
+                    editMessage = null;
                 }
             }
             headerTextContainer = (
@@ -586,15 +506,6 @@ class ChannelHeader extends React.PureComponent {
                 >
                     {dmHeaderIconStatus}
                     {dmHeaderTextStatus}
-                    {popoverListMembers}
-                    <HeaderIconWrapper
-                        iconComponent={pinnedIcon}
-                        ariaLabel={true}
-                        buttonClass={pinnedIconClass}
-                        buttonId={'channelHeaderPinButton'}
-                        onClick={this.showPinnedPosts}
-                        tooltipKey={'pinnedPosts'}
-                    />
                     <HeaderIconWrapper
                         iconComponent={channelFilesIcon}
                         ariaLabel={true}
@@ -604,7 +515,6 @@ class ChannelHeader extends React.PureComponent {
                         tooltipKey={'channelFiles'}
                     />
                     {hasGuestsText}
-                    {editMessage}
                 </div>
             );
         }
@@ -688,7 +598,7 @@ class ChannelHeader extends React.PureComponent {
                         id='channelHeaderDropdownButton'
                         className='channel-header__top'
                     >
-                        <button
+                        <div
                             className={`channel-header__trigger style--none ${this.state.titleMenuOpen ? 'active' : ''}`}
                             aria-label={formatMessage({id: 'channel_header.menuAriaLabel', defaultMessage: 'Channel Menu'}).toLowerCase()}
                         >
@@ -704,14 +614,9 @@ class ChannelHeader extends React.PureComponent {
                                     {sharedIcon}
                                 </span>
                             </strong>
-                            <span
-                                id='channelHeaderDropdownIcon'
-                                className='icon icon-chevron-down header-dropdown-chevron-icon'
-                                aria-label={formatMessage({id: 'generic_icons.dropdown', defaultMessage: 'Dropdown Icon'}).toLowerCase()}
-                            />
-                        </button>
+                        </div>
                     </div>
-                    <ChannelHeaderDropdown/>
+                    <div></div>
                 </MenuWrapper>
                 {toggleFavorite}
             </React.Fragment>

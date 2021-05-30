@@ -96,33 +96,7 @@ class UserGuideDropdown extends React.PureComponent<Props, State> {
         );
 
         return (
-            <MenuWrapper
-                className='userGuideHelp'
-                onToggle={this.buttonToggleState}
-            >
-                <OverlayTrigger
-                    delayShow={500}
-                    placement='bottom'
-                    overlay={this.state.buttonActive ? <></> : tooltip}
-                >
-                    <button
-                        id='channelHeaderUserGuideButton'
-                        className={classNames('channel-header__icon', {'channel-header__icon--active': this.state.buttonActive})}
-                        type='button'
-                        aria-expanded='true'
-                    >
-                        <UserGuideIcon className='icon'/>
-                    </button>
-                </OverlayTrigger>
-                <Menu
-                    openLeft={true}
-                    openUp={false}
-                    id='AddChannelDropdown'
-                    ariaLabel={intl.formatMessage({id: 'sidebar_left.add_channel_dropdown.dropdownAriaLabel', defaultMessage: 'Add Channel Dropdown'})}
-                >
-                    {this.renderDropdownItems()}
-                </Menu>
-            </MenuWrapper>
+            <div></div>
         );
     }
 }

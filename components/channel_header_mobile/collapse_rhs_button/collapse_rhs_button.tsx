@@ -14,16 +14,7 @@ type Props = {
 }
 
 const CollapseRhsButton: React.FunctionComponent<Props> = (props: Props) => (
-    <button
-        key='navbar-toggle-menu'
-        type='button'
-        className='navbar-toggle navbar-right__icon menu-toggle pull-right'
-        data-toggle='collapse'
-        data-target='#sidebar-nav'
-        onClick={props.actions.toggleRhsMenu}
-    >
-        <MenuIcon/>
-    </button>
+    <div></div>
 );
 
 export default CollapseRhsButton;

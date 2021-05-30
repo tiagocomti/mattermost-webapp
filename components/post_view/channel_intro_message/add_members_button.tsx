@@ -40,9 +40,7 @@ const AddMembersButton: React.FC<AddMembersButtonProps> = ({totalUsers, usersLim
     const isPrivate = channel.type === Constants.PRIVATE_CHANNEL;
     const inviteUsers = totalUsers < usersLimit;
 
-    return (
-        inviteUsers && !isPrivate ? lessThanMaxFreeUsers(setHeader, theme) : moreThanMaxFreeUsers(channel, setHeader)
-    );
+    return null;
 };
 
 const lessThanMaxFreeUsers = (setHeader: React.ReactNode, theme: any) => {

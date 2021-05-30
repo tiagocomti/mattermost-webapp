@@ -90,4 +90,19 @@
     }
 }
 
+.btn-primary-agf {
+    background: transparent!important;
+    border: 1px solid #84BD00 !important;;
+    color: #84BD00!important;
+    &:focus {
+        opacity: 0.8!important;
+        outline: 0;
+    }
+    &:hover {
+        opacity: 0.8!important;
+        outline: 0 !important;;
+    }
+}
+
+
 

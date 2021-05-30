@@ -267,7 +267,7 @@ export default class InteractiveDialog extends React.PureComponent {
                             id='interactiveDialogSubmit'
                             type='submit'
                             autoFocus={!elements || elements.length === 0}
-                            className='btn btn-primary save-button'
+                            className='btn btn-primary-agf save-button'
                             spinning={this.state.submitting}
                             spinningText={localizeMessage(
                                 'interactive_dialog.submitting',

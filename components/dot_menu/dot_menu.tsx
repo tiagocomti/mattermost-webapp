@@ -492,12 +492,6 @@ export class DotMenuClass extends React.PureComponent<Props, State> {
                         onClick={this.handleUnreadMenuItemActivated}
                     />
                     <Menu.ItemAction
-                        id={`permalink_${this.props.post.id}`}
-                        show={!isSystemMessage}
-                        text={Utils.localizeMessage('post_info.permalink', 'Copy Link')}
-                        onClick={this.copyLink}
-                    />
-                    <Menu.ItemAction
                         show={isMobile && !isSystemMessage && this.props.isFlagged}
                         text={Utils.localizeMessage('rhs_root.mobile.unflag', 'Remove from Saved')}
                         onClick={this.handleFlagMenuItemActivated}
@@ -506,18 +500,6 @@ export class DotMenuClass extends React.PureComponent<Props, State> {
                         show={isMobile && !isSystemMessage && !this.props.isFlagged}
                         text={Utils.localizeMessage('rhs_root.mobile.flag', 'Save')}
                         onClick={this.handleFlagMenuItemActivated}
-                    />
-                    <Menu.ItemAction
-                        id={`unpin_post_${this.props.post.id}`}
-                        show={!isSystemMessage && !this.props.isReadOnly && this.props.post.is_pinned}
-                        text={Utils.localizeMessage('post_info.unpin', 'Unpin')}
-                        onClick={this.handlePinMenuItemActivated}
-                    />
-                    <Menu.ItemAction
-                        id={`pin_post_${this.props.post.id}`}
-                        show={!isSystemMessage && !this.props.isReadOnly && !this.props.post.is_pinned}
-                        text={Utils.localizeMessage('post_info.pin', 'Pin')}
-                        onClick={this.handlePinMenuItemActivated}
                     />
                     {!isSystemMessage && (this.state.canEdit || this.state.canDelete) && this.renderDivider('edit')}
                     <Menu.ItemAction

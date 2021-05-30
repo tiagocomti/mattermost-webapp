@@ -134,6 +134,6 @@ export default class ChannelNavigator extends React.PureComponent<Props> {
             );
         }
 
-        return layout;
+        return null;
     }
 }

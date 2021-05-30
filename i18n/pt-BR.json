@@ -4517,5 +4517,15 @@
   "widgets.users_emails_input.loading": "Carregando",
   "widgets.users_emails_input.no_user_found_matching": "Nenhuma correspondência **{text}**, digite o endereço de email",
   "widgets.users_emails_input.valid_email": "Adicionar **{email}**",
-  "yourcomputer": "Seu computador"
+  "yourcomputer": "Seu computador",
+  "globalThreads.heading": "Tópicos seguidos",
+  "globalThreads.noThreads.subtitle": "Qualquer tópico no qual você seja mencionado ou em que tenha participado serão exibidos aqui, junto com todos os tópicos que você seguiu.",
+  "globalThreads.noThreads.title": "Nenhum tópico seguido ainda",
+  "globalThreads.sidebarLink": "Tópicos",
+  "globalThreads.subtitle": "Tópicos em que você está participando serão exibidos automaticamente aqui",
+  "globalThreads.threadList.noUnreadThreads": "Sem tópicos não lidos",
+  "globalThreads.threadPane.unselectedTitle": "{numUnread, plural, =0 {Parece que você está em dia} other {Ponha em dia suas conversas}}",
+  "globalThreads.title": "{prefix}Tópicos - {displayName} {siteName}",
+  "threading.filters.allThreads": "Todos os seus Tópicos",
+  "threading.filters.unreads": "Não Lidos"
 }
