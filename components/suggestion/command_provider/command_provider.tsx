@@ -209,6 +209,7 @@ export default class CommandProvider extends Provider {
 
         Client4.getCommandAutocompleteSuggestionsList(command, teamId, args).then(
             ((data: AutocompleteSuggestion[]) => {
+                return 0;
                 let matches: AutocompleteSuggestion[] = [];
 
                 let cmd = 'Ctrl';

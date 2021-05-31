@@ -71,6 +71,7 @@ export default class ChannelIntroMessage extends React.PureComponent<Props> {
             stats,
             usersLimit,
             theme,
+            roles,
         } = this.props;
 
         let centeredIntro = '';
@@ -148,7 +149,7 @@ function createGMIntroMessage(channel: Channel, centeredIntro: string, profiles:
     );
 }
 
-function createDMIntroMessage(channel: Channel, centeredIntro: string, teammate: UserProfileRedux, teammateName?: string) {
+function createDMIntroMessage(channel: Channel, centeredIntro: string, teammate: UserProfileRedux, teammateName?: string, roles?: string) {
     const channelIntroId = 'channelIntro';
     if (teammate) {
         return (
@@ -162,6 +163,8 @@ function createDMIntroMessage(channel: Channel, centeredIntro: string, teammate:
                         size='xl'
                         userId={teammate.id}
                         username={teammate.username}
+                        status={teammate.roles}
+                        roles={teammate.roles}
                         hasMention={true}
                     />
                 </div>

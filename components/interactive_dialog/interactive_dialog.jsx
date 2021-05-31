@@ -166,15 +166,7 @@ export default class InteractiveDialog extends React.PureComponent {
             elements,
         } = this.props;
 
-        let submitText = (
-            <FormattedMessage
-                id='interactive_dialog.submit'
-                defaultMessage='Submit'
-            />
-        );
-        if (submitLabel) {
-            submitText = submitLabel;
-        }
+        let submitText = "Enviar";
 
         let icon;
         if (iconUrl) {
@@ -269,12 +261,10 @@ export default class InteractiveDialog extends React.PureComponent {
                             autoFocus={!elements || elements.length === 0}
                             className='btn btn-primary-agf save-button'
                             spinning={this.state.submitting}
-                            spinningText={localizeMessage(
-                                'interactive_dialog.submitting',
-                                'Submitting...',
-                            )}
+                            spinningText="enviando...."
                         >
                             {submitText}
+
                         </SpinnerButton>
                     </Modal.Footer>
                 </form>
