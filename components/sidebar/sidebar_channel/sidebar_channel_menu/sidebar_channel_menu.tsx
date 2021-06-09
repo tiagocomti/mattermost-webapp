@@ -261,12 +261,7 @@ export class SidebarChannelMenu extends React.PureComponent<Props, State> {
         let addMembers;
         if ((channel.type === Constants.PRIVATE_CHANNEL && this.props.managePrivateChannelMembers) || (channel.type === Constants.OPEN_CHANNEL && this.props.managePublicChannelMembers)) {
             addMembers = (
-                <Menu.ItemAction
-                    id={`addMembers-${channel.id}`}
-                    onClick={this.addMembers}
-                    icon={<i className='icon-account-outline'/>}
-                    text={intl.formatMessage({id: 'sidebar_left.sidebar_channel_menu.addMembers', defaultMessage: 'Add Members'})}
-                />
+                <div></div>
             );
         }
 

@@ -299,15 +299,6 @@ class ProfilePopover extends React.PureComponent {
         } else if (canSetCustomStatus) {
             customStatusContent = (
                 <div>
-                    <button
-                        className='user-popover__set-custom-status-btn'
-                        onClick={this.showCustomStatusModal}
-                    >
-                        <FormattedMessage
-                            id='user_profile.custom_status.set_status'
-                            defaultMessage='Set a status'
-                        />
-                    </button>
                 </div>
             );
         }
@@ -521,24 +512,7 @@ class ProfilePopover extends React.PureComponent {
 
         if (this.props.user.id === this.props.currentUserId && !haveOverrideProp) {
             dataContent.push(
-                <div
-                    data-toggle='tooltip'
-                    key='user-popover-settings'
-                    className='popover__row first'
-                >
-                    <a
-                        href='#'
-                        onClick={this.handleEditAccountSettings}
-                    >
-                        <LocalizedIcon
-                            className='fa fa-pencil-square-o'
-                            title={{id: t('generic_icons.edit'), defaultMessage: 'Edit Icon'}}
-                        />
-                        <FormattedMessage
-                            id='user_profile.account.editSettings'
-                            defaultMessage='Edit Account Settings'
-                        />
-                    </a>
+                <div>
                 </div>,
             );
         }

@@ -52,17 +52,8 @@ const PostHeaderCustomStatus = (props: ComponentProps) => {
     const updateStatus = () => dispatch(setStatusDropdown(true));
 
     return (
-        <div
-            onClick={updateStatus}
-            className='post__header-set-custom-status cursor--pointer'
-        >
-            <EmojiIcon className='post__header-set-custom-status-icon'/>
-            <span className='post__header-set-custom-status-text'>
-                <FormattedMessage
-                    id='post_header.update_status'
-                    defaultMessage='Update your status'
-                />
-            </span>
+        <div>
+
         </div>
     );
 };
