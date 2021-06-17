@@ -17,6 +17,8 @@ export default function AgfStatusIcon(props: React.HTMLAttributes<HTMLSpanElemen
         texto_status += " e Moderador";
     }else if(props.roles_agf.includes(Permissions.USER_STATUS_MENTOR)){
         texto_status += " e Mentor";
+    }else if(props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER_PRIME)){
+        texto_status += " e Fundador Prime";
     }else if(props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER)){
         texto_status += " e Fundador";
     }
@@ -36,7 +38,7 @@ export default function AgfStatusIcon(props: React.HTMLAttributes<HTMLSpanElemen
                 <span class="tooltip-agf-text">{texto_status}</span>
             </span>
         );
-    }else if(props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER)){
+    }else if(props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER) || props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER_PRIME)){
         return (
             <span {...props} class={'status'}>
                 <img src={'/static/badges/fundador_icone.svg'} style={{height: "15px"}} />

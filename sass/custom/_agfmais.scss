@@ -87,7 +87,7 @@
 
 @media screen and (max-width: 640px) {
     .modal-body {
-        max-height: 50% !important;
+        max-height: calc(90vh - 80px) !important;
     }
 }
 

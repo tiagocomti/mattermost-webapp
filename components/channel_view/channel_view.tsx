@@ -16,6 +16,9 @@ import PostView from 'components/post_view';
 import TutorialView from 'components/tutorial';
 import {clearMarks, mark, measure, trackEvent} from 'actions/telemetry_actions.jsx';
 import FormattedMarkdownMessage from 'components/formatted_markdown_message';
+import {getCurrentUser, getCurrentUserRoles} from "mattermost-redux/selectors/entities/users";
+import {getUser} from "mattermost-redux/actions/users";
+import {Permissions} from "mattermost-redux/constants";
 
 type Props = {
     channelId: string;
@@ -231,7 +234,6 @@ export default class ChannelView extends React.PureComponent<Props, State> {
         }
 
         const DeferredPostView = this.state.deferredPostView;
-
         return (
             <div
                 ref={this.channelViewRef}

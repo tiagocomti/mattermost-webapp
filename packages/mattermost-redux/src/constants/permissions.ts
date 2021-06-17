@@ -222,6 +222,7 @@ const values = {
     USER_STATUS_MODERATOR: 'user_moderator',
     USER_STATUS_MENTOR: 'user_mentor',
     USER_STATUS_FOUNDER: 'user_founder',
+    USER_STATUS_FOUNDER_PRIME: 'user_founder_prime',
 
     CHANNEL_MODERATED_PERMISSIONS: {
         CREATE_POST: 'create_post',
