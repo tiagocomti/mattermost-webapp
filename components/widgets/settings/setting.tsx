@@ -31,7 +31,7 @@ const Setting: React.FC<Props> = ({
             <div
                 data-testid={inputId}
                 className='form-group'
-                style={{marginTop: "50px"}}
+                style={{marginTop: "20px"}}
             >
                 <label
                     data-testid={inputId + 'label'}
