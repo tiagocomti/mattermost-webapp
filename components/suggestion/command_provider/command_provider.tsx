@@ -54,21 +54,8 @@ export class CommandSuggestion extends Suggestion {
         }
 
         return (
-            <div
-                className={className}
-                onClick={this.handleClick}
-                onMouseMove={this.handleMouseMove}
-                {...Suggestion.baseProps}
-            >
-                {icon}
-                <div className='slash-command__info'>
-                    <div className='slash-command__title'>
-                        {item.Suggestion.substring(1) + ' ' + item.Hint}
-                    </div>
-                    <div className='slash-command__desc'>
-                        {item.Description}
-                    </div>
-                </div>
+            <div>
+
             </div>
         );
     }
