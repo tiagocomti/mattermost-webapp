@@ -4527,5 +4527,9 @@
   "globalThreads.threadPane.unselectedTitle": "{numUnread, plural, =0 {Parece que você está em dia} other {Ponha em dia suas conversas}}",
   "globalThreads.title": "{prefix}Tópicos - {displayName} {siteName}",
   "threading.filters.allThreads": "Todos os seus Tópicos",
-  "threading.filters.unreads": "Não Lidos"
+  "threading.filters.unreads": "Não Lidos","search_bar.files_tab": "Arquivos",
+  "search_bar.messages_tab": "Mensagens",
+  "search_bar.usage.search_type_files": "Arquivos",
+  "search_bar.usage.search_type_messages": "Mensagens",
+  "search_bar.usage.search_type_question": "O que você está procurando?"
 }

@@ -1612,7 +1612,124 @@ class CreatePost extends React.PureComponent {
                         </form>
                     </SystemPermissionGate>
                 );
-            }else {
+            }
+            if(currentChannel.name === "regras"){
+                return (
+                    <SystemPermissionGate permissions={[Permissions.USER_RULES_EDITOR]}>
+                        <form
+                            id='create_post'
+                            ref={this.topDiv}
+                            className={centerClass}
+                            onSubmit={this.handleSubmit}
+                        >
+                            <div
+                                className={'post-create' + attachmentsDisabled + scrollbarClass}
+                                style={this.state.renderScrollbar && this.state.scrollbarWidth ? {'--detected-scrollbar-width': `${this.state.scrollbarWidth}px`} : undefined}
+                            >
+
+                                <div className='post-create-body'>
+                                    <div
+                                        role='application'
+                                        id='centerChannelFooter'
+                                        aria-label={ariaLabelMessageInput}
+                                        tabIndex='-1'
+                                        className='post-body__cell a11y__region'
+                                        data-a11y-sort-order='2'
+                                    >
+                                        <Textbox
+                                            onChange={this.handleChange}
+                                            onKeyPress={this.postMsgKeyPress}
+                                            onKeyDown={this.handleKeyDown}
+                                            onSelect={this.handleSelect}
+                                            onMouseUp={this.handleMouseUpKeyUp}
+                                            onKeyUp={this.handleMouseUpKeyUp}
+                                            onComposition={this.emitTypingEvent}
+                                            onHeightChange={this.handleHeightChange}
+                                            handlePostError={this.handlePostError}
+                                            value={readOnlyChannel ? '' : this.state.message}
+                                            onBlur={this.handleBlur}
+                                            emojiEnabled={this.props.enableEmojiPicker}
+                                            createMessage={createMessage}
+                                            channelId={currentChannel.id}
+                                            id='post_textbox'
+                                            ref={this.textboxRef}
+                                            disabled={readOnlyChannel}
+                                            characterLimit={this.props.maxPostSize}
+                                            preview={this.props.shouldShowPreview}
+                                            badConnection={this.props.badConnection}
+                                            listenForMentionKeyClick={true}
+                                            useChannelMentions={this.props.useChannelMentions}
+                                        />
+                                        <span
+                                            ref={this.createPostControlsRef}
+                                            className='post-body__actions'
+                                        >
+                                        {callButton}
+                                            {fileUpload}
+                                            {emojiPicker}
+                                            <a
+                                                role='button'
+                                                tabIndex='0'
+                                                aria-label={formatMessage({
+                                                    id: 'create_post.send_message',
+                                                    defaultMessage: 'Send a message',
+                                                })}
+                                                className={sendButtonClass}
+                                                onClick={this.handleSubmit}
+                                            >
+                                            <LocalizedIcon
+                                                className='fa fa-paper-plane'
+                                                title={{
+                                                    id: t('create_post.icon'),
+                                                    defaultMessage: 'Create a post',
+                                                }}
+                                            />
+                                        </a>
+                                    </span>
+                                    </div>
+                                    {tutorialTip}
+                                </div>
+                                <div
+                                    id='postCreateFooter'
+                                    role='form'
+                                    className={postFooterClassName}
+                                >
+                                    <div className='d-flex justify-content-between'>
+                                        <MsgTyping
+                                            channelId={currentChannel.id}
+                                            postId=''
+                                        />
+                                        <TextboxLinks
+                                            characterLimit={this.props.maxPostSize}
+                                            showPreview={this.props.shouldShowPreview}
+                                            updatePreview={this.setShowPreview}
+                                            message={readOnlyChannel ? '' : this.state.message}
+                                        />
+                                    </div>
+                                    <div>
+                                        {postError}
+                                        {preview}
+                                        {serverError}
+                                    </div>
+                                </div>
+                            </div>
+                            <PostDeletedModal
+                                show={this.state.showPostDeletedModal}
+                                onHide={this.hidePostDeletedModal}
+                            />
+                            <ConfirmModal
+                                title={notifyAllTitle}
+                                message={notifyAllMessage}
+                                confirmButtonText={notifyAllConfirm}
+                                show={this.state.showConfirmModal}
+                                onConfirm={this.handleNotifyAllConfirmation}
+                                onCancel={this.hideNotifyAllModal}
+                            />
+                        </form>
+                    </SystemPermissionGate>
+                );
+            }
+            else {
                 return (
                     <form
                         id='create_post'

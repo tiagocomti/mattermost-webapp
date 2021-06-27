@@ -111,10 +111,45 @@ class SwitchChannelSuggestion extends Suggestion {
                 </div>
             );
         } else if(channel.display_name === "Radar"){
-            icon = (
-                <div className='suggestion-list__icon suggestion-list__icon--large'>
+            return (
+                <div className='suggestion-list__icon suggestion-list__icon--large' style={{opacity:1,margin: "0 4px 0 0"}}>
                     <span alt=':crocodile:' className='emoticon' title=':crocodile:'
-                          style={{backgroundImage: 'url(/static/emoji/1f40a.png)',marginRight: '9px'}}>:crocodile:</span>
+                          style={{backgroundImage: 'url(/static/emoji/1f40a.png)',marginRight: '1px'}} >:crocodile:</span>
+                </div>
+            );
+        } else if(channel.display_name === "Insights"){
+            return (
+                <div className='suggestion-list__icon suggestion-list__icon--large' style={{opacity:1,margin: "0 4px 0 0"}}>
+                    <span alt=':crocodile:' className='emoticon' title='Insights'
+                          style={{backgroundImage: 'url(/static/badges/mentor_icone.svg)',backgroundSize:'17px',marginRight: '1px'}} >:crocodile:</span>
+                </div>
+            );
+        }else if(channel.display_name === "Investimentos"){
+            return (
+                <div className='suggestion-list__icon suggestion-list__icon--large' style={{opacity:1,margin: "0 4px 0 0"}}>
+                    <span alt=':crocodile:' className='emoticon' title='Investimentos'
+                          style={{backgroundImage: 'url(/static/emoji/1f4b0.png)',marginRight: '1px'}} >:moneybag:</span>
+                </div>
+            );
+        }else if(channel.display_name === "Ajuda"){
+            return (
+                <div className='suggestion-list__icon suggestion-list__icon--large' style={{opacity:1,margin: "0 4px 0 0"}}>
+                    <span alt=':crocodile:' className='emoticon' title='Ajuda'
+                          style={{backgroundImage: 'url(/static/emoji/2754.png)',marginRight: '1px'}} >:question:</span>
+                </div>
+            );
+        }else if(channel.display_name === "Regras"){
+            return (
+                <div className='suggestion-list__icon suggestion-list__icon--large' style={{opacity:1,margin: "0 4px 0 0"}}>
+                    <span alt=':crocodile:' className='emoticon' title='Regras'
+                          style={{backgroundImage: 'url(/static/emoji/1f4d6.png)',marginRight: '1px'}} >:book:</span>
+                </div>
+            );
+        }else if(channel.display_name === "Moderadores"){
+            return (
+                <div className='suggestion-list__icon suggestion-list__icon--large' style={{opacity:1,margin: "0 4px 0 0"}}>
+                    <span alt=':crocodile:' className='emoticon' title='Moderadores'
+                          style={{backgroundImage: 'url(/static/badges/moderador_icone.svg)',backgroundSize:'17px',marginRight: '1px'}} >:book:</span>
                 </div>
             );
         }
