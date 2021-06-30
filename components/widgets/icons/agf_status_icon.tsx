@@ -16,7 +16,7 @@ export default function AgfStatusIcon(props: React.HTMLAttributes<HTMLSpanElemen
     if(props.roles_agf.includes(Permissions.USER_STATUS_MODERATOR)){
         texto_status += " e Moderador";
     }else if(props.roles_agf.includes(Permissions.USER_STATUS_MENTOR)){
-        texto_status += " e Mentor";
+        texto_status += " e Colaborador";
     }else if(props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER_PRIME)){
         texto_status += " e Fundador Prime";
     }else if(props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER)){

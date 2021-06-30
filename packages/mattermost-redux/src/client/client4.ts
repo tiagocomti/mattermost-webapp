@@ -3479,6 +3479,16 @@ export default class Client4 {
         );
     };
 
+    getMentorUsers = () => {
+        return this.doFetch<{
+            groups: Group[];
+            total_group_count: number;
+        }>(
+            `${this.getBaseRoute()}/user/getMentors`,
+            {method: 'get'},
+        );
+    };
+
     getAllGroupsAssociatedToTeam = (teamID: string, filterAllowReference = false, includeMemberCount = false) => {
         return this.doFetch<GroupsWithCount>(
             `${this.getBaseRoute()}/teams/${teamID}/groups${buildQueryString({paginate: false, filter_allow_reference: filterAllowReference, include_member_count: includeMemberCount})}`,

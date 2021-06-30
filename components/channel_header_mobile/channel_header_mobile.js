@@ -5,7 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {FormattedMessage} from 'react-intl';
-
+import {Tooltip, Overlay} from 'react-bootstrap';
 import classNames from 'classnames';
 
 import {MobileChannelHeaderDropdown} from 'components/channel_header_dropdown';
@@ -18,6 +18,10 @@ import CollapseRhsButton from './collapse_rhs_button';
 import ChannelInfoButton from './channel_info_button';
 import ShowSearchButton from './show_search_button';
 import UnmuteChannelButton from './unmute_channel_button';
+import OverlayTrigger from "../overlay_trigger";
+import {Constants} from "../../utils/constants";
+import store from "../../stores/redux_store";
+import {searchForTerm} from "../../actions/post_actions";
 
 export default class ChannelHeaderMobile extends React.PureComponent {
     static propTypes = {
@@ -83,6 +87,10 @@ export default class ChannelHeaderMobile extends React.PureComponent {
             }
         }
     }
+    searchForMentors = (e) => {
+        e.stopPropagation();
+        store.dispatch(searchForTerm("From: louise.barsi From:felipe.ruiz From: fabio.baroni In: "+this.props.channel.display_name));
+    };
 
     render() {
         const {user, channel, isMuted, isReadOnly, isRHSOpen, currentRelativeTeamUrl, inGlobalThreads} = this.props;
@@ -108,6 +116,48 @@ export default class ChannelHeaderMobile extends React.PureComponent {
                 </>
             );
         }
+        let toggleSearchForMentors = null;
+        let toggleFavoriteSearchMentors;
+        const formattedMessageMentors = {
+            id: 'channelHeader.searchForMentors',
+            defaultMessage: 'Procure por colaboradores nesse canal',
+        }
+        toggleFavoriteSearchMentors = (
+            <Tooltip id='searchForMentorsTooltip' >
+                <FormattedMessage
+                    {...formattedMessageMentors}
+                />
+            </Tooltip>
+        );
+        if(this.props.channel === undefined || this.props.channel.id === "f14wxd4z1pnf78941gmrmjqyzo" ||
+            this.props.channel.id === "dwu4pou39inturgfzennmfk4gr") {
+            toggleSearchForMentors = (
+                <OverlayTrigger
+                    key={`isSearchMentors`}
+                    delayShow={Constants.OVERLAY_TIME_DELAY}
+                    placement='bottom'
+                    overlay={toggleFavoriteSearchMentors}
+                >
+                    <button
+                        id='postsFromMentors'
+                        onClick={this.searchForMentors}
+                        className={'style--none color--link channel-header__favorites '}
+                        aria-label={'mentors'}
+                        style={{marginTop: '-3px'}}
+                    >
+                            <span alt=':crocodile:' className='emoticon' title='Insights' style={{
+                                backgroundImage: 'url(/static/badges/mentor_icone.svg)',
+                                backgroundSize: '30px',
+                                marginRight: '8px',
+                                borderRadius: '100%',
+                                width: "30px",
+                                height: "30px"
+
+                            }}>:crocodile:</span>
+                    </button>
+                </OverlayTrigger>
+            );
+        }
 
         return (
             <nav
@@ -130,6 +180,7 @@ export default class ChannelHeaderMobile extends React.PureComponent {
                                 currentRelativeTeamUrl={currentRelativeTeamUrl}
                             />
                         )}
+                        {toggleSearchForMentors}
                         <ShowSearchButton/>
                         {channel && (
                             <MobileChannelHeaderPlug

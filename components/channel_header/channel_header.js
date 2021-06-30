@@ -43,6 +43,10 @@ import CustomStatusEmoji from 'components/custom_status/custom_status_emoji';
 import CustomStatusText from 'components/custom_status/custom_status_text';
 
 import HeaderIconWrapper from './components/header_icon_wrapper';
+import store from "../../stores/redux_store";
+import {searchForTerm} from "../../actions/post_actions";
+import {getMyTeamRoles} from "mattermost-redux/selectors/entities/roles";
+import {Client4} from "mattermost-redux/client";
 
 const headerMarkdownOptions = {singleline: true, mentionHighlight: false, atMentions: true};
 const popoverMarkdownOptions = {singleline: false, mentionHighlight: false, atMentions: true};
@@ -135,6 +139,11 @@ class ChannelHeader extends React.PureComponent {
         } else {
             this.props.actions.favoriteChannel(this.props.channel.id);
         }
+    };
+    searchForMentors = (e) => {
+        e.stopPropagation();
+        // console.log(Client4.getMentorUsers());
+        store.dispatch(searchForTerm("From: louise.barsi From:felipe.ruiz From: fabio.baroni In: "+this.props.channel.display_name));
     };
 
     unmute = () => {
@@ -521,6 +530,8 @@ class ChannelHeader extends React.PureComponent {
 
         let toggleFavoriteTooltip;
         let toggleFavorite = null;
+        let toggleSearchForMentors = null;
+        let toggleFavoriteSearchMentors;
         let ariaLabel = '';
 
         if (!channelIsArchived) {
@@ -537,6 +548,17 @@ class ChannelHeader extends React.PureComponent {
                 <Tooltip id='favoriteTooltip' >
                     <FormattedMessage
                         {...formattedMessage}
+                    />
+                </Tooltip>
+            );
+            const formattedMessageMentors = {
+                    id: 'channelHeader.searchForMentors',
+                    defaultMessage: 'Procure por colaboradores nesse canal',
+            }
+            toggleFavoriteSearchMentors = (
+                <Tooltip id='searchForMentorsTooltip' >
+                    <FormattedMessage
+                        {...formattedMessageMentors}
                     />
                 </Tooltip>
             );
@@ -560,6 +582,33 @@ class ChannelHeader extends React.PureComponent {
                     </button>
                 </OverlayTrigger>
             );
+            if(this.props.channel.id === "f14wxd4z1pnf78941gmrmjqyzo" ||
+                this.props.channel.id === "dwu4pou39inturgfzennmfk4gr") {
+                toggleSearchForMentors = (
+                    <OverlayTrigger
+                        key={`isFavorite-${isFavorite}`}
+                        delayShow={Constants.OVERLAY_TIME_DELAY}
+                        placement='bottom'
+                        overlay={toggleFavoriteSearchMentors}
+                    >
+                        <button
+                            id='postsFromMentors'
+                            onClick={this.searchForMentors}
+                            className={'style--none color--link channel-header__favorites '}
+                            aria-label={ariaLabel}
+                            style={{marginTop: '21px'}}
+                        >
+                            <span alt=':crocodile:' className='emoticon' title='Insights' style={{
+                                backgroundImage: 'url(/static/badges/mentor_icone.svg)',
+                                backgroundSize: '17px',
+                                marginRight: '1px',
+                                marginTop: '-7px'
+
+                            }}>:crocodile:</span>
+                        </button>
+                    </OverlayTrigger>
+                );
+            }
         }
 
         const channelMutedTooltip = (
@@ -675,6 +724,7 @@ class ChannelHeader extends React.PureComponent {
                         channel={channel}
                         channelMember={channelMember}
                     />
+                    {toggleSearchForMentors}
                     <RHSSearchNav/>
                 </div>
             </div>
