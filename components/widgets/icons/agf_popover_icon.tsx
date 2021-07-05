@@ -18,6 +18,8 @@ export default function AgfPopoverIcon(props: React.HTMLAttributes<HTMLSpanEleme
         texto_status += " e Colaborador";
     }else if(props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER_PRIME)){
         texto_status += " e Fundador Prime";
+    }else if(props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER_PLUS)){
+        texto_status += " e Fundador +";
     }else if(props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER)){
         texto_status += " e Fundador";
     }
@@ -41,6 +43,20 @@ export default function AgfPopoverIcon(props: React.HTMLAttributes<HTMLSpanEleme
         return (
             <span {...props}>
              <img src={'/static/badges/mentor_icone.svg'} style={{
+                 height: "40px",
+                 width: "100px !important",
+                 maxWidth: "100px",
+                 left: "-10px",
+                 top: "-11px",
+                 position: "relative"
+             }}/>
+             <span class="tooltip-agf-text">{texto_status}</span>
+            </span>
+        );
+    }else if(props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER_PLUS) ){
+        return (
+            <span {...props}>
+             <img src={'/static/badges/fundador_mais.svg'} style={{
                  height: "40px",
                  width: "100px !important",
                  maxWidth: "100px",
