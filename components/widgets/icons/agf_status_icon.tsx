@@ -17,6 +17,8 @@ export default function AgfStatusIcon(props: React.HTMLAttributes<HTMLSpanElemen
         texto_status += " e Moderador";
     }else if(props.roles_agf.includes(Permissions.USER_STATUS_MENTOR)){
         texto_status += " e Colaborador";
+    }else if(props.roles_agf.includes(Permissions.USER_STATUS_USER_AGFMAIS)){
+        texto_status += " e AGF+";
     }else if(props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER_PRIME)){
         texto_status += " e Fundador Prime";
     }else if(props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER_PLUS)){
@@ -46,6 +48,10 @@ export default function AgfStatusIcon(props: React.HTMLAttributes<HTMLSpanElemen
                 <img src={'/static/badges/fundador_mais.svg'} style={{height: "15px"}} />
                 <span class="tooltip-agf-text">{texto_status}</span>
             </span>
+        );
+    }else if(props.roles_agf.includes(Permissions.USER_STATUS_USER_AGFMAIS)){
+        return (
+            <span class="tooltip-agf-text">{texto_status}</span>
         );
     }else if(props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER) || props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER_PRIME)){
         return (

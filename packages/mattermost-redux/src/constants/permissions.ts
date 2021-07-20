@@ -224,6 +224,7 @@ const values = {
     USER_STATUS_FOUNDER: 'user_founder',
     USER_STATUS_FOUNDER_PRIME: 'user_founder_prime',
     USER_STATUS_FOUNDER_PLUS: 'user_founder_plus',
+    USER_STATUS_USER_AGFMAIS: 'user_agfmais',
     USER_RULES_EDITOR: 'user_rules_editor',
 
     CHANNEL_MODERATED_PERMISSIONS: {

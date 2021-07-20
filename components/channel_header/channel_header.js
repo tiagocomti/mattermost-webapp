@@ -582,7 +582,6 @@ class ChannelHeader extends React.PureComponent {
                     </button>
                 </OverlayTrigger>
             );
-            console.log(this.props.channel.id);
             if(this.props.channel.id === "f14wxd4z1pnf78941gmrmjqyzo" ||
                 this.props.channel.id === "dwu4pou39inturgfzennmfk4gr" ||
                 this.props.channel.id === "INs4pou39inturgfzennmfk4gr") {

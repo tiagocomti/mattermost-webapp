@@ -67,6 +67,10 @@ export default function AgfPopoverIcon(props: React.HTMLAttributes<HTMLSpanEleme
              <span class="tooltip-agf-text">{texto_status}</span>
             </span>
         );
+    }else if(props.roles_agf.includes(Permissions.USER_STATUS_USER_AGFMAIS) ){
+        return (
+             <span class="tooltip-agf-text">{texto_status}</span>
+        );
     }else if(props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER) || props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER_PRIME)){
         return (
             <span {...props}>

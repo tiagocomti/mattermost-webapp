@@ -53,6 +53,7 @@ export default class StatusIcon extends React.PureComponent<Props> {
                 status.includes(Permissions.USER_STATUS_FOUNDER) ||
                 status.includes(Permissions.USER_STATUS_FOUNDER_PRIME) ||
                 status.includes(Permissions.USER_STATUS_FOUNDER_PLUS) ||
+                status.includes(Permissions.USER_STATUS_USER_AGFMAIS) ||
                 status.includes(Permissions.USER_STATUS_MENTOR)){
                 IconComponent = AgfPopoverIcon;
 
@@ -63,6 +64,7 @@ export default class StatusIcon extends React.PureComponent<Props> {
                     status.includes(Permissions.USER_STATUS_FOUNDER) ||
                     status.includes(Permissions.USER_STATUS_FOUNDER_PRIME) ||
                     status.includes(Permissions.USER_STATUS_FOUNDER_PLUS) ||
+                    status.includes(Permissions.USER_STATUS_USER_AGFMAIS) ||
                     status.includes(Permissions.USER_STATUS_MENTOR)){
                     IconComponent = AgfStatusIcon;
                 }else if (status === 'online') {
@@ -79,6 +81,7 @@ export default class StatusIcon extends React.PureComponent<Props> {
                 status.includes(Permissions.USER_STATUS_FOUNDER) ||
                 status.includes(Permissions.USER_STATUS_FOUNDER_PRIME) ||
                 status.includes(Permissions.USER_STATUS_FOUNDER_PLUS) ||
+                status.includes(Permissions.USER_STATUS_USER_AGFMAIS) ||
                 status.includes(Permissions.USER_STATUS_MENTOR)){
                 IconComponent = AgfStatusIcon;
             }
