@@ -113,6 +113,13 @@ export default class SidebarBaseChannel extends React.PureComponent<Props, State
                           style={{backgroundImage: 'url(/static/emoji/2699-fe0f.png)',marginRight: '1px'}} >:gear:</span>
                 </div>
             );
+        }else if(channel.name === "jbi9"){
+            return (
+                <div className='suggestion-list__icon suggestion-list__icon--large' style={{opacity:1,margin: "0 4px 0 0"}}>
+                    <span alt=':gear:' className='emoticon' title='JBI'
+                          style={{backgroundImage: 'url(/static/badges/JBIVERDE.png)',backgroundSize:'17px',marginRight: '1px'}} >:crocodile:</span>
+                </div>
+            );
         }
         else if (channel.type === Constants.PRIVATE_CHANNEL) {
             return (
