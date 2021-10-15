@@ -72,10 +72,18 @@ export default class SidebarBaseChannel extends React.PureComponent<Props, State
                 </div>
             );
         } else if(channel.display_name === "Insights"){
+            // @ts-ignore
             return (
                 <div className='suggestion-list__icon suggestion-list__icon--large' style={{opacity:1,margin: "0 4px 0 0"}}>
                     <span alt=':crocodile:' className='emoticon' title='Insights'
                           style={{backgroundImage: 'url(/static/badges/mentor_icone.svg)',backgroundSize:'17px',marginRight: '1px'}} >:crocodile:</span>
+                </div>
+            );
+        }else if(channel.name === "lives"){
+            return (
+                <div className='suggestion-list__icon suggestion-list__icon--large' style={{opacity:1,margin: "0 4px 0 0"}}>
+                    <span alt=':crocodile:' className='emoticon' title='Lives'
+    style={{backgroundImage: 'url(/static/badges/live.png)', backgroundSize: '17px', marginRight: '1px'}} />
                 </div>
             );
         }else if(channel.display_name === "Investimentos"){
