@@ -132,6 +132,7 @@ export default class ChannelHeaderMobile extends React.PureComponent {
         if(this.props.channel === undefined ||
             this.props.channel.id === "f14wxd4z1pnf78941gmrmjqyzo" ||
             this.props.channel.id === "INs4pou39inturgfzennmfk4gr" ||
+            this.props.channel.id === "CENTRArE9inturgfzennmfk4gr" ||
             this.props.channel.id === "dwu4pou39inturgfzennmfk4gr") {
             toggleSearchForMentors = (
                 <OverlayTrigger
@@ -168,8 +169,8 @@ export default class ChannelHeaderMobile extends React.PureComponent {
                 role='navigation'
             >
                 <div className='container-fluid theme'>
-                    <div className='navbar-header'>
-                        <CollapseLhsButton/>
+                    <div style={{marginLeft: "10px"}} className='navbar-header'>
+
                         <div className={classNames('navbar-brand', {GlobalThreads___title: inGlobalThreads})}>
                             {heading}
                         </div>
