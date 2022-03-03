@@ -167,11 +167,12 @@ export default class ChannelHeaderMobile extends React.PureComponent {
                 id='navbar'
                 className='navbar navbar-default navbar-fixed-top'
                 role='navigation'
+                style={{backgroundColor: "white"}}
             >
                 <div className='container-fluid theme'>
                     <div style={{marginLeft: "10px"}} className='navbar-header'>
 
-                        <div className={classNames('navbar-brand', {GlobalThreads___title: inGlobalThreads})}>
+                        <div style={{color: "black"}} className={classNames('navbar-brand', {GlobalThreads___title: inGlobalThreads})}>
                             {heading}
                         </div>
                         <div className='spacer'/>

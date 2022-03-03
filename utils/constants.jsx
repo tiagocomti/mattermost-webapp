@@ -1106,7 +1106,7 @@ export const Constants = {
             sidebarTextHoverBg: '#4578bf',
             sidebarTextActiveBorder: '#579eff',
             sidebarTextActiveColor: '#ffffff',
-            sidebarHeaderBg: '#1153ab',
+            sidebarHeaderBg: '#ffffff',
             sidebarTeamBarBg: '#0b428c',
             sidebarHeaderTextColor: '#ffffff',
             onlineIndicator: '#06d6a0',

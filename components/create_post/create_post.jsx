@@ -1497,7 +1497,7 @@ class CreatePost extends React.PureComponent {
             scrollbarClass = ' scroll';
         }
         if(currentChannel.name !== "radar") {
-            if(currentChannel.name === "insights"){
+            if(currentChannel.name === "insights" || currentChannel.name === "central"){
                 return (
                     <SystemPermissionGate permissions={[Permissions.USER_STATUS_MENTOR]}>
                         <form

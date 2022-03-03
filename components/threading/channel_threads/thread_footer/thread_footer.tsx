@@ -118,23 +118,6 @@ function ThreadFooter({
                 className='separated'
                 onClick={handleFollowing}
             />
-
-            {Boolean(lastReplyAt) && (
-                <Timestamp
-                    value={lastReplyAt}
-                    {...THREADING_TIME}
-                >
-                    {({formatted}) => (
-                        <span className='Timestamp separated alt-visible'>
-                            <FormattedMessage
-                                id='threading.footer.lastReplyAt'
-                                defaultMessage='Last reply {formatted}'
-                                values={{formatted}}
-                            />
-                        </span>
-                    )}
-                </Timestamp>
-            )}
         </div>
     );
 }
