@@ -23,6 +23,8 @@ export default function AgfPopoverIcon(props: React.HTMLAttributes<HTMLSpanEleme
     }else if(props.roles_agf.includes(Permissions.USER_STATUS_FOUNDER)){
         texto_status += " e Fundador";
     }
+    texto_status+="";
+
     const {formatMessage} = useIntl();
 
     if(props.roles_agf.includes(Permissions.USER_STATUS_MODERATOR)) {
@@ -40,6 +42,7 @@ export default function AgfPopoverIcon(props: React.HTMLAttributes<HTMLSpanEleme
         </span>
         );
     }else if(props.roles_agf.includes(Permissions.USER_STATUS_MENTOR)){
+        console.log("jean ta aqui o");
         return (
             <span {...props}>
              <img src={'/static/badges/mentor_icone.svg'} style={{
@@ -84,6 +87,10 @@ export default function AgfPopoverIcon(props: React.HTMLAttributes<HTMLSpanEleme
              }}/>
              <span class="tooltip-agf-text">{texto_status}</span>
             </span>
+        );
+    }else{
+        return (
+            <span class="tooltip-agf-text">{texto_status}</span>
         );
     }
 }

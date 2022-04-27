@@ -56,7 +56,8 @@ export default class StatusIcon extends React.PureComponent<Props> {
                 status.includes(Permissions.USER_STATUS_USER_AGFMAIS) ||
                 status.includes(Permissions.USER_STATUS_MENTOR)){
                 IconComponent = AgfPopoverIcon;
-
+            }else{
+                IconComponent = AgfPopoverIcon;
             }
         }else{
             if (type === 'avatar') {
@@ -67,15 +68,8 @@ export default class StatusIcon extends React.PureComponent<Props> {
                     status.includes(Permissions.USER_STATUS_USER_AGFMAIS) ||
                     status.includes(Permissions.USER_STATUS_MENTOR)){
                     IconComponent = AgfStatusIcon;
-                }else if (status === 'online') {
-                    IconComponent = StatusOnlineAvatarIcon;
-                } else if (status === 'away') {
-                    IconComponent = StatusAwayAvatarIcon;
-                } else if (status === 'dnd') {
-                    IconComponent = StatusDndAvatarIcon;
                 } else {
-                    return null;
-                    IconComponent = StatusOfflineAvatarIcon;
+                    IconComponent = AgfStatusIcon;
                 }
             }else if(status.includes(Permissions.USER_STATUS_MODERATOR) ||
                 status.includes(Permissions.USER_STATUS_FOUNDER) ||
@@ -85,17 +79,11 @@ export default class StatusIcon extends React.PureComponent<Props> {
                 status.includes(Permissions.USER_STATUS_MENTOR)){
                 IconComponent = AgfStatusIcon;
             }
-            else if (status === 'online') {
-                IconComponent = StatusOnlineIcon;
-            } else if (status === 'away') {
-                IconComponent = StatusAwayIcon;
-            } else if (status === 'dnd') {
-                IconComponent = StatusDndIcon;
-            }
             else {
-                return null;
+                IconComponent = AgfStatusIcon;
             }
         }
+
 
         return <IconComponent {...iconComponentProps}/>;
     }
