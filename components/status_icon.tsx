@@ -68,7 +68,15 @@ export default class StatusIcon extends React.PureComponent<Props> {
                     status.includes(Permissions.USER_STATUS_USER_AGFMAIS) ||
                     status.includes(Permissions.USER_STATUS_MENTOR)){
                     IconComponent = AgfStatusIcon;
-                } else {
+                }else if (status === 'online') {
+                    IconComponent = StatusOnlineAvatarIcon;
+                } else if (status === 'away') {
+                    IconComponent = StatusAwayAvatarIcon;
+                } else if (status === 'dnd') {
+                    IconComponent = StatusDndAvatarIcon;
+                } else if (status === 'offline'){
+                    IconComponent = StatusOfflineIcon;
+                }else {
                     IconComponent = AgfStatusIcon;
                 }
             }else if(status.includes(Permissions.USER_STATUS_MODERATOR) ||
@@ -78,6 +86,15 @@ export default class StatusIcon extends React.PureComponent<Props> {
                 status.includes(Permissions.USER_STATUS_USER_AGFMAIS) ||
                 status.includes(Permissions.USER_STATUS_MENTOR)){
                 IconComponent = AgfStatusIcon;
+            }
+            else if (status === 'online') {
+                IconComponent = StatusOnlineIcon;
+            } else if (status === 'away') {
+                IconComponent = StatusAwayIcon;
+            } else if (status === 'dnd') {
+                IconComponent = StatusDndIcon;
+            }else if (status === 'offline'){
+                IconComponent = StatusOfflineIcon;
             }
             else {
                 IconComponent = AgfStatusIcon;
