@@ -143,7 +143,7 @@ class ChannelHeader extends React.PureComponent {
     searchForMentors = (e) => {
         e.stopPropagation();
         // console.log(Client4.getMentorUsers());
-        store.dispatch(searchForTerm("From: louise.barsi From:felipe.ruiz From: fabio.baroni In: "+this.props.channel.display_name));
+        store.dispatch(searchForTerm("From: louise.barsi From:felipe.ruiz From: fabio.baroni From: jmelo In: "+this.props.channel.display_name));
     };
 
     unmute = () => {

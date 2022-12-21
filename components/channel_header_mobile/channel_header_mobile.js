@@ -89,7 +89,7 @@ export default class ChannelHeaderMobile extends React.PureComponent {
     }
     searchForMentors = (e) => {
         e.stopPropagation();
-        store.dispatch(searchForTerm("From: louise.barsi From:felipe.ruiz From: fabio.baroni In: "+this.props.channel.display_name));
+        store.dispatch(searchForTerm("From: louise.barsi From:felipe.ruiz From: fabio.baroni From: jmelo In: "+this.props.channel.display_name));
     };
 
     render() {
